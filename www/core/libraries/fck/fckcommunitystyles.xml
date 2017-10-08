@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles>
+    <Style name="Strong Emphasis" element="strong" />
+    <Style name="Normal" element="span">
+        <Attribute name="dir" value="ltr" />
+    </Style>
+</Styles>

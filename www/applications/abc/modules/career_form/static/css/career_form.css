@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+
+.education_form_module .form_switch {
+	overflow: hidden;
+	padding: 10px 0;	
+}
+
+
+.education_form_module .form_switch a {
+	display: block;
+	float: left;
+	padding: 5px 10px;
+	margin: 20px;
+	font-size: 20px;
+	text-decoration: none;
+	border-radius: 5px;	
+}
+
+.education_form_module .form_switch a span {
+	display: block;
+	padding: 2px;
+	border-bottom: 1px dashed;
+}
+
+.education_form_module .form_switch a.active {
+	background: #FDD5AA;
+}

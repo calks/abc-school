@@ -1,0 +1,1 @@
+{if $banner->html_code}<div class="content separated banner">{$banner->html_code}</div>{/if}

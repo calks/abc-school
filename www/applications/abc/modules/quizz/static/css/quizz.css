@@ -1,0 +1,170 @@
+@CHARSET "UTF-8";
+
+
+.quizz_module h2 {
+	margin-top: 5px;
+	font-size: 16px;
+	font-family: Arial, sans-serif;
+	color: #000000;	
+	padding-top: 10px;
+	margin-top: 10px;
+}
+
+
+.quizz_module h2 .back {
+	float: right;
+	font-size: 14px;
+	padding-left: 30px;
+	background: url(../img/back.gif) 3px no-repeat;
+	line-height: 19px;		
+}
+
+
+.quizz_module form .question {
+	padding: 0 10px 13px;
+	border-bottom: 2px dashed #fee8d1;			
+}
+
+.quizz_module form .answers {
+	overflow: hidden;
+	padding: 13px 10px;
+}
+
+.quizz_module form .answers .option {
+	overflow: hidden;
+	margin-bottom: 7px;
+}
+
+.quizz_module form .answers input {
+	float: left;
+	display: block;
+	margin: 2px 0 0;
+}
+
+.quizz_module form .answers p {
+	margin: 0;
+	padding-left: 20px;
+}
+
+.quizz_module form input.submit {
+	left: 10px;	
+	float: left;
+}
+
+.quizz_blocker {
+	position: absolute;
+	background: #ffffff url(../img/ajax-loader.gif) center no-repeat;
+	z-index: 9000;
+}
+
+.quizz_module .no_answer {
+	padding-left: 10px;
+	font-weight: bold;
+	font-size: 14px;
+	color: red;
+	padding: 14px 0 0 140px; 
+}
+
+.quizz_module .detailed_result {
+	margin: 10px 0;
+	overflow: hidden;	
+}
+
+
+.quizz_module .detailed_result .question {
+	/*border-bottom: 1px dashed #000000;*/	
+	padding-bottom: 15px;
+	margin: 10px 0;
+}
+
+
+.text.quizz_module .detailed_result .question p {
+	font-size: 14px;
+	margin-top: 0;
+}
+
+.text.quizz_module .detailed_result .question .q p {
+	padding: 10px;
+	background-color: #feebd6;			
+}
+
+.quizz_module .detailed_result .answers {	
+	width: 100%;
+	margin-bottom: 7px;
+}
+
+.text.quizz_module .detailed_result .answers p {
+	margin: 0;
+	padding: 0;	
+}
+
+.quizz_module .detailed_result .answers td {
+	padding: 3px;
+	border-bottom: 2px solid #ffffff;
+}
+
+.quizz_module .detailed_result .answers .odd td {
+	background-color: #eeeeee;
+}
+
+.quizz_module .detailed_result .answers .even td {
+	background-color: #dddddd;
+}
+
+.quizz_module .detailed_result .answers .right td {
+	background-color: #ccffcc;
+}
+
+.quizz_module .detailed_result .answers .wrong td {
+	background-color: #ffdddd;
+}
+
+
+.quizz_module .detailed_result .question h3 {
+	color: #000000;
+	font-family: Arial, sans-serif;
+	font-size: 15px;
+	margin-top: 20px;	
+}
+
+.quizz_module .detailed_result .answers .num {
+	width: 20px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+	border-right: 2px solid #ffffff;
+}
+
+
+
+.quizz_module .view_detailed_result {
+	text-decoration: none;
+	border-bottom: 1px dashed;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

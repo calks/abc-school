@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+
+.block.last_news {
+	overflow: hidden;
+	padding-bottom: 20px;	
+}
+
+
+.block.last_news .column {
+	width: 32%;
+	float: left;
+	margin: 0 2%;
+}
+
+.block.last_news .column.first,
+.block.last_news .column.last {
+	margin: 0;	
+}
+
+.block.last_news h3 {
+	border: none;
+	margin-top: 10px;
+}
+
+.block.last_news h3 .date {
+	color: #3bb9fa;
+	font-style: italic;
+	display: block;
+}
+
+.block.last_news h3 a {
+	color: #000000;		
+}
+
+.block.last_news h3 a:hover {
+	text-decoration: none;
+}
+
+/*.block.last_news p {
+	font-size: 14px;
+}*/
+

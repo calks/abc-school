@@ -1,0 +1,941 @@
+body,td,th,input,textarea,select,a {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    background-color: #ffffff;
+    padding: 0px;
+    margin: 0px;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin: 3px 0;
+}
+
+h2 {
+    margin-top: 0px;
+}
+
+img {
+    display: block;
+    border: 0px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+div.body {
+    margin: 0 20px;
+}
+
+.embeded div.body {
+    margin: 0;
+}
+
+div.logo_cms {
+    position: relative;
+}
+
+div.logo_cms IMG {
+    display: block;
+    float: left;
+    margin: 5px 0 0 5px;
+}
+
+div.logo_cms div {
+    float: right;
+    padding: 10px 20px;
+}
+
+div.logo_cms div.name_site {
+    float: left;
+    margin-top: 0px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+}
+
+div.copyright {
+    font-size: 10px;
+    color: #c0c0c0;
+    padding-top: 20px;
+    float: right;
+}
+
+/* login */
+table.login td {
+    vertical-align: bottom;
+    color: #000000;
+    text-align: left;
+    padding-top: 2px;
+}
+
+fieldset {
+    border: 1px solid #aac7cc;
+}
+
+table.login td a {
+    color: #000000;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+div.error {
+    padding: 20px 0px 20px 20px;
+    color: red;
+}
+
+div.success {
+    padding: 20px 0px 20px 20px;
+    color: green;
+}
+
+div.login_form {
+    text-align: center;
+    padding-top: 10px;
+    height: 100px;
+}
+
+div.content {
+    padding-top: 0px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+
+/*  admin's menu  */
+div.logout {
+    text-align: right;
+    padding-right: 10px;
+    padding-top: 20px;
+    font-size: 11px;
+    font-weight: normal;
+    margin-bottom: 5px;
+    color: #3e3e3c;
+}
+
+div.logout a {
+    font-weight: bold;
+}
+
+div.admin_header {
+    vertical-align: bottom;
+    padding-top: 10px;
+}
+
+div.admin_header a:hover {
+    text-decoration: underline !important;
+}
+
+div.admin_header table td {
+    text-align: center;
+    padding: 2px 16px;
+    background-image: url('../img/topleft8.gif');
+    background-position: top left;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-left: 1px solid #fff;
+    background-color: #aac7cc;
+    color: #666;
+    white-space: nowrap;
+}
+
+div.admin_header table td.transparent {
+    background: none;
+    padding: 0px;
+}
+
+div.admin_header table td.selected {
+    background-color: #66aac1;
+    border-bottom: none;
+}
+
+div.admin_header table td.clear {
+    background: transparent;
+}
+
+div.admin_header table td a {
+    color: #666666;
+    background: transparent;
+}
+
+div.admin_header table td.selected a {
+    color: #ffffff;
+    background: transparent;
+}
+
+div.admin_header table td a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/*
+div.admin_header ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+div.admin_header ul li {
+    text-align: center;
+    padding: 2px 16px;
+    background-image: url('../img/topleft8.gif');
+    background-position: top left;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-left: 1px solid #fff;
+    background-color: #aac7cc;
+    color: #666;
+    white-space: nowrap;
+    float: left;
+    list-style-type: none;
+}
+
+div.admin_header ul li.transparent {
+    background: none;
+    padding: 0px;
+}
+
+div.admin_header ul li.selected {
+    background-color: #66AAC1;
+}
+
+div.admin_header ul li.clear {
+    background: transparent;
+}
+
+div.admin_header ul li a {
+    color: #666666;
+    background: transparent;
+}
+
+div.admin_header ul li.selected a {
+    color: #ffffff;
+    background: transparent;
+}
+
+div.admin_header ul li a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+  */
+div.admin_header div.tab_bottom {
+    background-color: #66aac1;
+    height: 3px;
+    line-height: 3px;
+}
+
+/*  list document  */
+div.paginator {
+    float: left;
+    margin: auto;
+}
+
+div.link_add {
+    float: right;
+    margin: auto;
+    text-align: right !important;
+}
+
+div.link_add_left {
+    margin-bottom: 20px;
+}
+
+div.paginator,div.link_add {
+    padding: 5px 0px;
+}
+
+div.paginator a,div.link_add a {
+    text-decoration: underline;
+}
+
+div.paginator form,div.link_add form {
+    display: block;
+    width: 200px;
+}
+
+div.top_comment {
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+}
+
+div.top_comment img {
+    position: relative;
+    top: 3px;
+    display: inline;
+    margin-right: 3px;
+}
+
+div.top_comment,div.top_comment a {
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+}
+
+div.list_content {
+    border-bottom: 1px solid #a3a29f;
+}
+
+table.list {
+    width: 100%;
+}
+
+table.list td,table.list tr.hover td,table.list th {
+    height: 20px;
+    padding-left: 7px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    white-space: nowrap;
+    border: 1px solid #cccccc;
+}
+
+table.list tr.hover td {
+    background-color: #fafafa;
+}
+
+table.list td input {
+    background: auto;
+}
+
+table.list th {
+    background-color: #eeeeee;
+    font-weight: bold;
+}
+
+table.list td span {
+    margin-left: 15px;
+}
+
+table.list td img {
+    border: none;
+    display: inline;
+    margin-right: 4px;
+    position: relative;
+    top: 2px;
+}
+
+table.list td a,
+table.list th a,
+.messages_container td a,
+.messages_container th a {
+    text-decoration: underline;
+    background: transparent;
+}
+
+.messages_container .tabs a {
+    background: transparent;
+}
+
+table.list td.up {
+    width: 15px;
+    text-align: left;
+}
+
+table.list td.delete {
+    width: 50px;
+    font-size: 8pt;
+    vertical-align: middle;
+    text-align: center;
+}
+
+table.list td.cell {
+    width: 100px;
+    font-size: 8pt;
+    vertical-align: middle;
+    text-align: center;
+    white-space: normal;
+}
+
+table.list tr.odd td {
+    background-color: #ffffff;
+}
+
+table.list tr.even td {
+    background-color: #f6f6f6;
+}
+
+table.list tr.not_approved td {
+    background-color: #FACE8D;
+}
+
+table.list tr.disapproved td {
+    background-color: #cccccc;
+}
+
+
+table.list td.yeswrap {
+    white-space: normal !important;
+}
+
+div.content_counter {
+    padding: 10px;
+}
+
+/*  form edit  */
+table.form {
+    width: 30%;
+    margin: auto;
+}
+
+table.edit th {
+    text-align: right;
+    padding-right: 5px;
+}
+
+table.edit td {
+    padding-top: 3px;
+}
+
+table.edit td img {
+    display: inline;
+    margin-left: 5px;
+}
+
+.buttom_form {
+    padding-bottom: 1px;
+    padding-left: 3px;
+}
+
+.buttom_form input {
+    border: 1px solid #60605c;
+    color: #60605c;
+    background-color: #dbd7d1;
+}
+
+/* calendar home */
+div.calendar_mode_form input {
+    margin-bottom: -3px;
+}
+
+table.calendar {
+    width: 245px;
+    margin-left: 5px;
+    display: block;
+    border: none;
+}
+
+table.calendar td,table.calendar th {
+    width: 35px;
+    height: 23px;
+    border: 1px solid #000000;
+    text-align: center;
+    vertical-align: middle;
+}
+
+table.calendar th {
+    background-color: #eeeeee;
+    font-size: 12px;
+}
+
+table.calendar td.free {
+    background: none;
+    cursor: pointer;
+}
+
+table.calendar-sample td {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+table.calendar-sample td.comment {
+    /*font-size: 80%;*/
+    padding-left: 20px;
+}
+
+table.calendar td.free {
+    background: none;
+    cursor: pointer;
+}
+
+table.calendar-sample div.free,
+table.calendar-sample div.booked,
+table.calendar-sample div.morning,
+table.calendar-sample div.evening {
+    border: 1px solid Black;
+    width: 25px;
+    height: 25px;
+}
+
+
+table.calendar td.free {
+    cursor: pointer;
+}
+
+
+table.calendar td.booked {
+    background-color: red;
+    cursor: pointer;
+}
+
+table.calendar-sample div.booked {
+    background-color: red;
+}
+
+table.calendar td.morning {
+    background: transparent url('/img/calendar/red-morning.gif') top left no-repeat;
+    cursor: pointer;
+}
+
+table.calendar-sample div.morning {
+    background: transparent url('/img/calendar/red-morning-2.gif') top left no-repeat;
+}
+
+table.calendar td.evening {
+    background: transparent url('/img/calendar/red-evening.gif') bottom right no-repeat;
+    cursor: pointer;
+}
+
+table.calendar-sample div.evening {
+    background: transparent url('/img/calendar/red-evening-2.gif') bottom right no-repeat;
+}
+
+table.calendar th.headline {
+    white-space: nowrap;
+    width: 100% !important;
+    vertical-align: middle;
+}
+
+table.calendar th.headline span {
+    font-weight: normal;
+    color: Red;
+    vertical-align: top;
+}
+
+/* position to map */
+div#map_area {
+    position: relative;
+    /*border: 1px solid red;*/
+    padding: 0px;
+}
+
+img.home_icon {
+    position: absolute;
+    display: block;
+    margin: 0px;
+}
+
+img.home_icon_all {
+    position: absolute;
+    display: block;
+    margin: 0px;
+}
+
+.voting_result {
+    text-align: right;
+    alear: both;
+    font-size: 10px;
+}
+
+.voting_bar {
+     height: 10px;
+     margin-top: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+td.checkboxes td {
+    padding-right: 10px;
+}
+
+td div.col_divider {
+    display: inline-block;
+}
+
+.filter_table th {
+	font-weight: bold;
+	text-align: right;	
+}
+
+.filter_table th,
+.filter_table td {
+	padding: 3px 5px;
+}
+
+
+.messages_row td {
+	border-top: none;
+	background: #EEEEFF;
+}
+
+
+
+.blocker {
+	position: absolute;
+	background: #ffffff url('../img/ajax-loader.gif') center no-repeat;
+	z-index: 99;
+	opacity: 0.8;
+	filter: progid : DXImageTransform.Microsoft.Alpha ( opacity = 80 );
+}
+
+
+/** Normal Style Positions **/
+div.jGrowl {
+	position: absolute;
+	z-index: 1199;
+}
+
+body>div.jGrowl {
+	position: fixed;
+}
+
+div.jGrowl.top-left {
+	left: 0px;
+	top: 0px;
+}
+
+div.jGrowl.top-right {
+	right: 0px;
+	top: 0px;
+}
+
+div.jGrowl.bottom-left {
+	left: 0px;
+	bottom: 0px;
+}
+
+div.jGrowl.bottom-right {
+	right: 0px;
+	bottom: 0px;
+}
+
+div.jGrowl.center {
+	top: 0px;
+	width: 50%;
+	left: 25%;
+}
+
+/** Cross Browser Styling **/
+div.center div.jGrowl-notification,div.center div.jGrowl-closer {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.jGrowl div.jGrowl-notification,div.jGrowl div.jGrowl-closer {
+	background-color: #000;
+	opacity: .85;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
+	filter: progid : DXImageTransform.Microsoft.Alpha ( Opacity = 85 );
+	zoom: 1;
+	width: 235px;
+	padding: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	text-align: left;
+	display: none;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+div.jGrowl div.jGrowl-notification {
+	min-height: 40px;
+	border-radius: 10px;	
+}
+
+div.jGrowl div.jGrowl-notification,div.jGrowl div.jGrowl-closer {
+	margin: 10px;
+}
+
+div.jGrowl div.jGrowl-notification div.jGrowl-header {
+	font-weight: bold;
+	font-size: .85em;
+}
+
+div.jGrowl div.jGrowl-notification div.jGrowl-close {
+	z-index: 1199;
+	float: right;
+	font-weight: bold;
+	font-size: 1em;
+	cursor: pointer;
+	color: #ffffff;
+}
+
+div.jGrowl div.jGrowl-closer {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	cursor: pointer;
+	font-size: .9em;
+	font-weight: bold;
+	text-align: center;
+}
+
+/** Hide jGrowl when printing **/
+@media print {
+	div.jGrowl {
+		display: none;
+	}
+}
+
+/* custom */
+.jGrowl-notification.error .jGrowl-message,.jGrowl-notification.warning .jGrowl-message,.jGrowl-notification.ok .jGrowl-message
+	{
+	padding: 0 15px 0 40px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #ffffff;
+	background-position: top left;
+	background-repeat: no-repeat;
+	min-height: 32px;
+	line-height: 150%;
+}
+
+.jGrowl-notification.error .jGrowl-message {
+	background-image: url('../img/jgrowl/error.png');
+}
+
+.jGrowl-notification.warning .jGrowl-message {
+	background-image: url('../img/jgrowl/warning.png');
+}
+
+.jGrowl-notification.ok .jGrowl-message {
+	background-image: url('../img/jgrowl/ok.png');
+}
+
+
+table.list .messages_container td,
+table.list .messages_container th { 
+	border: none;
+	border-left: 1px solid #ffffff;
+}
+
+table.list .messages_container .subject td,
+table.list .messages_container .subject th {	
+	border-left: none;
+}
+
+
+
+.messages_container .write_message {
+	display: block;
+	float: right;
+	text-decoration: none;
+	border-bottom: 1px dotted;
+	margin: 15px 0 0;	
+}
+
+
+.messages_container .list_container {
+	min-height: 0;
+}
+
+
+.messages_container .list_container .empty {
+	margin: 20px 0;
+}
+
+.ui-widget-header a {
+	background: transparent;
+}
+
+.group_actions {
+	border: 1px solid silver;
+	padding: 10px;
+	background: #F6F6F6;
+	margin-bottom: 13px;
+	overflow: hidden;
+	display: none;
+}
+
+.group_actions h2 {
+	font-size: 12px;
+	float: left;
+	position: relative;
+	top: 1px;
+	margin: 0;
+}
+
+.group_actions ul {
+	padding: 0 0 0 130px;
+	margin: 0;
+	list-style: none;	
+}
+
+.group_actions ul,
+.group_actions ul li {
+	height: 18px;
+}
+
+.group_actions ul li {
+	float: left;
+	padding: 0 10px;
+	border-left: 1px solid silver;	
+	border-right: 1px solid silver;
+}
+
+.group_actions ul li a {
+	float: left;
+	display: block;
+	position: relative;
+	top: 1px; 
+	background: transparent;
+}
+
+.group_actions ul li select {
+	float: left;
+	display: block;
+	margin-left: 7px;
+	border: 1px solid silver;
+
+}
+
+.filter_table {
+	border: 1px solid silver;
+	padding: 10px;	
+}
+
+.filter_table td,
+.filter_table th {
+	background: #F6F6F6;	
+}
+
+.filter_table th {
+	vertical-align: top;
+}
+
+.filter_table input[type=text] {
+	border: 1px solid silver;
+	padding: 1px 3px;
+}
+
+.filter_table select {
+	border: 1px solid silver;	
+}
+
+.filter_table .actions {
+	margin: 10px 0;
+	font-weight: bold;
+}
+
+.filter_table .actions a {
+	background: transparent;
+	margin: 0 10px;
+	border-bottom: 1px dashed;
+}
+
+
+td.caption {
+	padding-left: 3px;
+	cursor: pointer;
+}
+
+
+.object_count {
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+.sort_link {
+	font-weight: bold;
+}
+
+.sort_link.selected {
+	background-repeat: no-repeat;
+	background-position: left 4px;
+	padding: 3px 0 3px 15px;
+}
+
+.sort_link.asc {
+	background-image: url(../img/up.gif);
+	background-position: left 2px; 
+}
+
+.sort_link.desc {
+	background-image: url(../img/down.gif) 
+}
+
+
+table.edit .key_event input {
+	float: left;
+	margin-right: 10px;	
+}
+
+table.edit .change_key_event_notification {
+	padding-left: 20px;	
+}
+
+
+table.schedule {
+	width: 100%;
+	min-width: 806px;
+	display: none;
+}
+
+table.schedule td {
+	border: 1px solid #cccccc;
+	padding: 3px 10px;
+}
+
+table.schedule .weekday td {
+	font-weight: bold;
+	text-align: center;
+	background: #eeeeee;
+}
+
+table.schedule .entries td {
+	height: 100px;
+	vertical-align:top;
+}
+
+table.schedule .actions td {
+	text-align: center;
+	width: 14%;
+}
+
+table.schedule .actions a,
+table.schedule .actions a:hover {
+	text-decoration: none;
+	border-bottom: 1px dotted;	
+}
+
+table.schedule .entry {
+	margin: 3px 0 5px;
+	padding-left: 25px;		
+}
+
+table.schedule .entry .del {
+	display: block;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	background: url(../img/delete.gif) center no-repeat;
+	margin-left: -25px;	
+}
+
+table.schedule .entry input {
+	border: 1px solid #cccccc;
+	width: 40px;
+	
+}
+
+table.schedule .entry input.error {
+	background-color: #fdd;
+	border-color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

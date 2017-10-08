@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.block.slideshow {	
+	overflow: hidden;
+	margin: 20px 0;	
+}
+
+.block.slideshow .left {
+	width: 50%;
+	float: left;
+}
+
+.block.slideshow .right {
+	width: 457px;
+	height: 309px;
+	float: right;
+	overflow: hidden;
+	position: relative;
+	top: 12px;
+}
+
+.block.slideshow .right .frame {
+	position: absolute;
+	width: 457px;
+	height: 309px;
+	background: url(../img/frame.png);
+	z-index: 1000;	
+}

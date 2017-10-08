@@ -1,0 +1,11 @@
+syntax: glob
+.buildpath
+.project
+.settings/*
+access.log
+error.log
+misc/*
+www/photos/*
+www/temp/*
+www/files/*
+www/SQLyogTunnel.php

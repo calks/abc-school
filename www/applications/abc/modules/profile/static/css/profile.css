@@ -1,0 +1,73 @@
+@CHARSET "UTF-8";
+
+.header_menu.profile_menu {
+	text-align: left;
+	padding-left: 0;	
+}
+
+.text .profile_menu li {
+	padding-left: 0;
+	background-image: none;
+}
+
+.header_menu.profile_menu li.active a {
+	background: #C85704;
+	color: #ffffff;
+}
+
+
+
+.text form.mini.profile-filter label {
+	width: 80px;
+}
+
+.text form.mini.profile-filter label.narrow {
+	width: auto;
+}
+
+.text form.mini.profile-filter input {
+	width: auto;
+}
+
+.text form.mini.profile-filter > div {
+	margin: 3px 0;
+}
+
+.text form.mini.profile-filter .clear_student {
+	text-decoration: none;
+	color: #C85704;
+	display: block;
+	float: left;
+	font-size: 14px;
+	border-bottom: 1px dashed;
+	margin-left: 10px;
+	padding: 4px 0 0;
+}
+
+p.month_price {
+	float: right;
+	max-width: 30%;
+}
+
+p.month_price > span {
+	display: block;
+	/*max-width: 30%;*/
+}
+
+.gname {
+	float: left;
+	clear: both;
+}
+
+.gname .comment,
+p.month_price .comment {
+	color: #666;
+	font-size: 12px;
+	border-top: 1px solid #aaa;
+	margin-top: 10px;	
+}
+
+
+.gname .comment {
+	display: block;
+}

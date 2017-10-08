@@ -1,0 +1,303 @@
+@CHARSET "UTF-8";
+
+
+.text {
+	
+}
+
+.text a {
+	color: #000000; 
+}
+
+.text a:hover {
+	text-decoration: none;
+}
+
+
+.text h1, h2, h3 {
+	color: #ff9118;
+	/*border-bottom: 1px solid #c2c2c2;*/
+	font-family: "Century Gothic", arial, sans-serif;
+	padding-bottom: 3px;	
+}
+
+.text h1 {
+	font-size: 20px;
+}
+
+.text h2 {
+	font-size: 18px;	
+}
+
+.text h3 {
+	font-size: 16px;
+}
+
+
+.text p,
+.text ul,
+.text table td,
+.text table th {
+	margin: 10px 0;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.text ul {
+	padding-left: 5px;
+}
+
+.text li {
+	list-style: none;
+	background: url(../img/bullet.gif) left 6px no-repeat;
+	padding-left: 20px;
+	margin: 5px 0;	
+}
+
+
+
+
+
+.text form {	
+	overflow: hidden;
+	padding: 10px;
+	background-color: #ffcd97;
+	border-top: 1px solid #b1b3b4;		
+	border-bottom: 1px solid #b1b3b4;
+	border-radius: 10px;
+}
+
+
+.text form h2 {
+	border: none;
+	color: #C85704;
+	clear: both;		
+}
+
+
+.text form h2.separated {
+	margin-top: 15px;
+}
+
+
+.text form input,
+.text form select,
+.text form textarea {
+	border: 1px solid #c85704;
+	float: left;
+	font-size: 14px;
+}
+
+.text form .input_wrap {
+	float: left;
+	padding-bottom: 3px;
+}
+
+.text form .input_wrap input {
+	float: none;
+}
+
+.text form label,
+.text form input,
+.text form select,
+.text form textarea,
+.text form b {
+	padding: 3px 3px;
+	margin-bottom: 5px;
+}
+
+.text form input,
+.text form select {
+	height: 18px;	
+}
+
+.text form select {
+	height: 24px;
+	padding: 1px 0 1px 3px;  
+}
+
+.text form select option {
+	padding-right: 10px;
+}
+
+.text form label {
+	width: 100px;
+	float: left;
+	clear: both;
+	text-align: right;
+	font-size: 14px;	
+	padding: 5px 10px;
+}
+
+.text form label span {
+	color: #666;
+	font-size: 11px;
+}
+
+.text form b {
+	display: block;
+	float: left;
+	padding-top: 5px;	
+}
+
+.text .full_width {
+	overflow: hidden;
+	/*margin-bottom: 15px;*/
+	clear: both;
+}
+
+
+.text .full_width input[type=text],
+.text .full_width textarea {
+	width: 790px;
+}
+
+.text .full_width input.checkbox {
+	width: auto;
+	padding: 0;
+	margin: 0;	
+}
+
+
+.text .one_line {
+	overflow: hidden;
+	float: left;
+	/*margin-bottom: 15px;*/	
+}
+
+.text .one_line label {
+	width: auto;
+	clear: none;
+	padding-left: 20px;
+}
+
+
+.text form input.submit {
+	background-color: #ff9118;
+	height: 26px;
+	padding: 3px 15px 10px;
+	position: relative;
+	left: 120px; 
+	cursor: pointer;
+	font-weight: bold;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+
+.text form div.comment {
+	clear: both;
+	float: right;
+	margin-top: 15px;
+	margin-right: 10px;
+}
+
+
+.text form img.captcha {
+	display: block;
+	float: left;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+
+
+.text form input.error,
+.text form select.error,
+.text form textarea.error {
+	background: #ffe6e6;	
+}
+	
+	
+.text form div.error {
+	float: left;
+	clear: both;
+	position: relative;
+	left: 120px;
+	color: red;
+	font-weight: bold;
+	background: #ffffff url(../img/form_error.gif) bottom left no-repeat; 
+	padding: 3px 5px 7px;
+}
+
+.text form .row {
+	overflow: hidden;
+	clear: both;
+}
+
+
+.text td p {
+	padding: 0 10px;
+}
+
+
+.text form.mini {
+	padding: 4px 5px 2px;
+}
+
+.text form.mini label,
+.text form.mini input,
+.text form.mini select {
+	margin-bottom: 0;
+	clear: none;
+}
+
+.text form.mini label {
+	width: auto;
+}
+
+.text.education_form_module label {
+	width: 150px;
+}
+
+
+
+.text.education_form_module .full_width input[type="text"], 
+.text.education_form_module .full_width textarea {
+	width: 740px;
+}
+
+.text.education_form_module form.two-thirds-size .full_width input,
+.text.education_form_module form.two-thirds-size .full_width textarea {
+	width: 380px;
+}
+
+
+
+.text.education_form_module form.half-size label {
+	width: 100px;
+}
+
+
+.text.education_form_module form.half-size .full_width input[type="text"] {
+	width: 380px;
+}
+
+
+.text.education_form_module form div.error,
+.text.education_form_module form input.submit  {
+	left: 170px;
+}
+
+
+.text.education_form_module input[type=checkbox],
+.text.education_form_module input[type=radio] {
+	position: relative;
+	top: 3px;
+}
+
+
+.text.education_form_module p.success,
+.text.education_form_module p.error {
+	font-weight: bold;
+	color: red;
+	margin: 20px 0;
+}
+
+
+.text.education_form_module p.success {
+	color: green;
+}
+
+
+
+
+

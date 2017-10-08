@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+
+
+.block.hotlinks {
+	padding: 0 0 10px;
+	text-align: center;
+	padding: 20px 0;		
+}
+
+.block.hotlinks a {
+	display: inline-block;	
+	height: 56px;	
+	padding-left: 55px;
+	padding-top: 7px;
+	font-size: 16px;	
+	font-family: "Century Gothic", arial, sans-serif;
+	color: #ffffff;
+	text-decoration: none;
+	text-align: left;
+	background: left no-repeat;
+	text-shadow: #ca6518 2px 2px 1px;
+	text-transform: uppercase;	 		
+}
+
+
+.block.hotlinks a.education {
+	padding-left: 52px;
+	width: 147px;
+	background-image: url(../img/education.png);	
+}
+
+.block.hotlinks a.career {
+	width: 168px;
+	background-image: url(../img/career.png);
+	margin: 0 80px;	
+}
+
+.block.hotlinks a.quizz {
+	width: 144px;
+	background-image: url(../img/quizz.png);	
+}
