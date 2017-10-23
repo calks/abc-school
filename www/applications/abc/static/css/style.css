@@ -299,6 +299,7 @@ body {
 	overflow: hidden;	
 }
 
+
 .attendance .chart tbody span.data {
 	display: block;	
 	height: 20px;
@@ -419,6 +420,11 @@ body {
 .attendance .chart .comment {
 	background-position: -32px -144px;
 }
+
+.attendance .chart .notes .comment {
+	background-position: -32px -96px;
+}
+
 
 .attendance .chart .check_all {
 	background-position: -64px -80px;

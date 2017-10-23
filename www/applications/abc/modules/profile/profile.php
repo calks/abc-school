@@ -503,6 +503,83 @@
 			
 		}
 		
+
+		
+		protected function taskSave_user_notes($params=array()) {
+			
+			$notes_raw = isset($_POST['notes']) ? $_POST['notes'] : array();
+
+			$notes = array();
+			foreach ($notes_raw as $user_id=>$note) {
+				$user_id = (int)$user_id;
+				if ($user_id) {
+					$notes[$user_id] = trim($note, " \r\n");
+				}
+			}
+					
+			
+			if (!$notes) {
+				die(json_encode(array(
+					'error' => 'Ошибка в данных'
+				)));
+			}
+						
+			
+			$user = Application::getEntityInstance('user');
+			$user_table = $user->getTableName();
+			$user_alias = $user->getTableAlias($user_table);
+			$user_ids_str = implode(',', array_keys($notes));
+			
+			$user_load_params['where'][] = "$user_alias.id IN($user_ids_str)";
+			$users = $user->load_list($user_load_params);
+			
+			
+			$teacher_logged = $this->user->role == 'teacher';
+			$admin_logged = in_array($this->user->role, array('manager', 'admin'));
+			
+			$edit_granted = $teacher_logged || $admin_logged;
+			if ($teacher_logged) {
+				foreach ($users as $u) {					
+					$same_group = count(array_intersect($this->user->group_id, $u->group_id)) != 0;					
+					$edit_granted = $edit_granted && $same_group;
+				}
+			}
+			
+			
+			if (!$edit_granted) {
+				die(json_encode(array(
+					'error' => 'У вас нет прав на изменение пользователей'
+				)));
+			}
+				
+			
+			
+			foreach ($users as $u) {
+				$u->notes = $notes[$u->id];
+				$u->save();
+			}
+			
+			
+			$out = array(
+				'message' => 'Данные сохранены'				
+			); 
+			
+			$start_year = Request::get('start_year');
+			$group_id = $users[0]->group_id[0];
+			$chart_type = Request::get('chart_type');
+			
+			if ($chart_type == 'payment') {
+				$out['chart'] = $this->getPaymentChartHtml($group_id, null, $start_year);
+			}			
+			elseif ($chart_type == 'attendance') {
+				$out['chart'] = $this->getChartHtml($group_id);
+			}
+				
+			
+			die(json_encode($out));
+				
+		}
+		
 		
 
 		protected function taskSave_homework($params=array()) {
@@ -741,7 +818,7 @@
 		
 		
 		protected function taskPayment($params=array()) {
-			if (profileHelperLibrary::canEditPayment()) {
+			if (profileHelperLibrary::canEditPayment() || profileHelperLibrary::canEditGroupData()) {
 				$page = Application::getPage();
 				$page->addScript('/applications/abc/static/js/jquery.mCustomScrollbar.min.js');
 				$page->addStylesheet(Application::getApplicationUrl() . '/static/css/jquery.mCustomScrollbar.css');
@@ -775,6 +852,7 @@
 				$group_month_price_comment = $group->month_price_comment;
 			}
 			
+			Application::loadLibrary('olmi/field');
 			$payment = Application::getEntityInstance('user_payment');
 			$year_options = $payment->getPaymentYearOptions();
 			$year_select = new TSelectField('payment_start_year', $start_year, $year_options);
@@ -1015,6 +1093,7 @@
 			$smarty->assign('column_keys', $column_keys);
 			$smarty->assign('columns_count', count($column_keys));
 			$smarty->assign('can_edit', profileHelperLibrary::canEditGroupData());
+			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditGroupData());
 			
 			return $smarty->fetch($this->getTemplatePath('attendance_chart'));
 		
@@ -1072,6 +1151,9 @@
 			$smarty->assign('column_keys', $column_keys);
 			$smarty->assign('columns_count', count($column_keys));
 			$smarty->assign('can_edit', profileHelperLibrary::canEditPayment());
+			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditGroupData());
+			$smarty->assign('start_year', $start_year);
+			
 			
 			$chart = $smarty->fetch($this->getTemplatePath('payment_chart'));			
 			return $chart;

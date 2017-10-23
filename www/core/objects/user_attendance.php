@@ -23,7 +23,8 @@
 			$sql = "
 				SELECT 
 					$user_table.id AS user_id,
-					CONCAT($user_table.lastname, ' ', $user_table.firstname) AS user_name
+					CONCAT($user_table.lastname, ' ', $user_table.firstname) AS user_name,
+					notes AS user_notes
 				FROM
 					$user_coupling_table 
 					LEFT JOIN $user_table ON $user_table.id = $user_coupling_table.user_id
@@ -35,10 +36,12 @@
 			";
 					
 			$data = $db->executeSelectAllObjects($sql);
+			
 			$out = array();
 			foreach ($data as $d) {
 				$out[$d->user_id] = array(
 					'user_name' => $d->user_name,
+					'user_notes' => $d->user_notes,
 					'attendance' => array(),
 					'missed_two' => false
 				);

@@ -109,6 +109,57 @@
 			}
 			
 			
+			function applyNotesChanges() {
+				var cells = getCells(1);
+				
+				
+				var notes = {};
+				cells.find('textarea').each(function(){
+					var fieldname = $(this).attr('name');
+					var user_id_match = fieldname.match(/\[(\d+)\]/);
+					var user_id = user_id_match ? user_id_match[1] : null;
+					if (!user_id) throw("Saving notes: can't extract data");
+					var note = $(this).val();
+					
+					notes[user_id] = note;
+				});
+				
+				
+						
+				_block(table);
+					
+				$.ajax({
+					url: '/profile/save_user_notes',
+					data: {
+						notes: notes,
+						start_year: table.find('input[name=start_year]').val(),
+						chart_type: table.find('input[name=chart_type]').val()
+					},
+					type: 'post',
+					dataType: 'json',
+					success: function(data) {
+						_unblock();
+						var error = typeof(data.error)!='undefined' ? data.error : '';
+						if (error) overlay_message('error', error);
+							
+						var message = typeof(data.message)!='undefined' ? data.message : '';
+						if (message) overlay_message('ok', message);
+							
+						var new_chart = typeof(data.chart)!='undefined' ? data.chart : '';
+						if (new_chart) {
+							table.html(new_chart);							
+							setScroll();
+							setMissedTwo();
+							maskSelectedStudent();
+							setYearPeriodVisibility();
+						}
+					}						
+				});
+				
+			}
+
+			
+			
 			function applyChanges(col_number) {
 				var cells = getCells(col_number);
 				
@@ -326,10 +377,15 @@
 			});
 	
 			$('#'+acontainer_id+' .chart .save').live('click', function(){
-				var head_cell = $(this).parents('td:first');						
-				var col_number = parseInt(head_cell.attr('id').toString().substr(4));
-				
-				applyChanges(col_number);
+				if ($(this).is('.save-notes')) {
+					applyNotesChanges();
+				}
+				else {
+					var head_cell = $(this).parents('td:first');						
+					var col_number = parseInt(head_cell.attr('id').toString().substr(4));
+					
+					applyChanges(col_number);
+				}
 							
 				return false;
 			});

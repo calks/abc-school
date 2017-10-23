@@ -14,6 +14,7 @@
 		var $cell_phone;
 		var $info;
 		var $is_hidden;
+		var $notes;
 
 		function __construct() {
 			$this->group_id = array();
@@ -163,8 +164,7 @@
 			
 			$this->set_load_params($params);
 			
-			$list = parent::load_list($params);
-			
+			$list = parent::load_list($params);			
 			$group = Application::getEntityInstance('user_group');
 			$group->loadCoupling($list);
 			

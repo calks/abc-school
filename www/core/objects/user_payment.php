@@ -86,11 +86,13 @@
 			
 			$current_year = (int)date('Y');
 			$current_month = (int)date('m');
-			
 			$out = array();
+			
+			
 			foreach ($data as $d) {
 				$item = array(
 					'user_name' => $d->user_name,
+					'user_notes' => $d->notes,
 					'payments' => array(),
 					'is_debtor' => false
 				);
