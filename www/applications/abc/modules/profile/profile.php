@@ -789,7 +789,7 @@
 				$page = Application::getPage();
 				$page->addScript('/applications/abc/static/js/jquery.mCustomScrollbar.min.js');
 				$page->addStylesheet(Application::getApplicationUrl() . '/static/css/jquery.mCustomScrollbar.css');
-				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js');
+				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.1');
 			}
 			
 			$this->groupLogic();
@@ -822,7 +822,7 @@
 				$page = Application::getPage();
 				$page->addScript('/applications/abc/static/js/jquery.mCustomScrollbar.min.js');
 				$page->addStylesheet(Application::getApplicationUrl() . '/static/css/jquery.mCustomScrollbar.css');
-				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js');
+				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.1');
 			}
 			
 			

@@ -34,7 +34,7 @@
 									    {assign var=col_number value=$col_number+1}
 									{/foreach}
 									{if $can_edit}
-										<td id="col_{$columns_count+1}">
+										<td id="col_{$col_number}">
 											<span class="data">
 												<span class="time tmp hidden"></span>
 												<input type="hidden" name="entry_id" value="" />
