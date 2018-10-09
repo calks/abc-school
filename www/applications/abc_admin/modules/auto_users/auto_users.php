@@ -83,8 +83,12 @@
 				$values = array();
 				$group_coupling = array();
 				
-				$file_utf = iconv('cp1251', 'utf-8', $file);
-				$branch_title = trim(str_replace('.csv', '', $file_utf)); 
+				
+				$is_filename_utf = preg_match('/[а-я]/isu', $file);				
+				$file_utf = $is_filename_utf ? $file : iconv('cp1251', 'utf-8', $file);
+				$branch_title = trim(str_replace('.csv', '', $file_utf));
+
+				
 				if (mb_strpos($file_utf, 'Менеджеры') !== false) $role = 'manager';
 				elseif (mb_strpos($file_utf, 'Преподаватели') !== false) $role = 'teacher';
 				else $role = 'student';
