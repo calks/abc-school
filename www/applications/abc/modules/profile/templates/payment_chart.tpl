@@ -25,9 +25,7 @@
 												{if $can_edit}
 													<input type="hidden" name="entry_date" value="{$period_start}" />												
 													<a class="edit" title="править" href="#"></a>
-													<a class="save three-btn hidden" title="сохранить" href="#"></a>
-													<a class="cancel three-btn hidden" title="отмена" href="#"></a>
-													<a class="check_all three-btn hidden" title="отметить всех" href="#"></a>
+													<a class="save three-btn hidden" title="сохранить" href="#"></a><a class="cancel three-btn hidden" title="отмена" href="#"></a><a class="check_all three-btn hidden" title="отметить всех" href="#"></a>
 												{/if}
 											</span>
 									    </td>
