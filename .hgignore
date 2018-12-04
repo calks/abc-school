@@ -9,3 +9,5 @@ www/photos/*
 www/temp/*
 www/files/*
 www/SQLyogTunnel.php
+www/applications/abc_admin/modules/auto_users/static/*
+www/old/*
