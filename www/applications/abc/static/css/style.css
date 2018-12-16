@@ -369,12 +369,19 @@ body {
 /*	background: #efefef;*/
 }
 
-.attendance .chart tbody input {	
+.attendance .chart tbody input[type=checkbox] {	
 	cursor: pointer;	
 	position: relative;
 	margin: 0 6px;
 	top: -2px;
 	left: 1px;
+}
+
+
+.attendance .chart tbody input[type=text] {
+	width: 20px;
+	position: relative;
+	top: -2px;
 }
 
 

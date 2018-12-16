@@ -112,6 +112,11 @@
 				'name' => 'Оплата обучения',
 				'link' => Application::getSeoUrl("/{$this->getName()}/payment")			
 			);
+
+			$items['marks'] = array(
+				'name' => 'Промежуточная успеваемость',
+				'link' => Application::getSeoUrl("/{$this->getName()}/marks")			
+			);
 			
 			
 			$items['logout'] = array(
@@ -402,6 +407,84 @@
 			
 		}
 		
+		
+		protected function taskSave_marks($params=array()) {
+			$entry_id = (int)Request::get('entry_id');
+			$entry_date = preg_replace('/^(\d+)\.(\d+)\.(\d+)$/', '$3-$2-$1', Request::get('entry_date'));
+			
+			$this->checkGroupRights($entry_id, $entry_date);
+			
+			$schedule = Application::getEntityInstance('user_group_schedule');
+			$entry = $schedule->load($entry_id);			
+			
+			$user_data = isset($_POST['users']) && $_POST['users'] ? $_POST['users'] : array();
+			//print_r($user_data);
+			
+			$user_ids = array();
+			foreach($user_data as $item) {
+				$uid = $item['id'];
+				if (!$uid) continue;
+				$user_ids[] = $uid;
+			}
+			
+			$user_ids = array_unique($user_ids);
+			$db = Application::getDb();
+			
+			if ($user_ids && $this->user->role == 'teacher') {
+				$auser_ids = implode(',', $user_ids);
+				
+				$group = Application::getEntityInstance('user_group');
+				$group_coupling_table = $group->getCouplingTableName();
+				
+				$sql = "
+					SELECT COUNT(*)
+					FROM $group_coupling_table
+					WHERE user_id IN($auser_ids) AND group_id=$entry->user_group_id
+				";
+				
+				if ($db->executeScalar($sql) != count($user_ids)) {
+					die(json_encode(array(
+						'error' => 'Вы пытаетесь редактировать успеваемость для пользователя из чужой группы'
+					)));
+				}
+			}
+			
+			$marks = Application::getEntityInstance('user_marks');
+			$table = $marks->getTableName();
+			
+			$db->execute("
+				DELETE FROM $table
+				WHERE schedule_entry_id=$entry_id AND schedule_entry_date='$entry_date'  
+			");
+			
+
+			$values = array();
+			foreach ($user_data as $item) {
+				$uid = (int)$item['id'];
+				if (!$uid) continue;
+				if (!$item['mark'] && !$item['comment']) continue;
+				$comment = addslashes($item['comment']);
+				$mark = (int)$item['mark'];
+				if ($mark<1 || $mark>5) $mark = 0;
+				$values[] = "($uid, $entry_id, '$entry_date', '$comment', $mark)";
+			}
+			
+			if($values) {				
+				$values = implode(',', $values);
+				$db->execute("
+					INSERT INTO $table (user_id, schedule_entry_id, schedule_entry_date, comment, mark) VALUES $values
+				");
+			}
+			
+			die(json_encode(array(
+				'message' => 'Данные сохранены',
+				'chart' => $this->getMarksChartHtml($entry->user_group_id)
+			)));
+			
+		}
+		
+		
+		
 		protected function taskStudent_lookup($params=array()) {
 			if (!profileHelperLibrary::canEditProfile()) die();
 			$name = Request::get('name');
@@ -570,6 +653,9 @@
 			
 			if ($chart_type == 'payment') {
 				$out['chart'] = $this->getPaymentChartHtml($group_id, null, $start_year);
+			}
+			elseif ($chart_type == 'marks') {
+				$out['chart'] = $this->getMarksChartHtml($group_id);
 			}			
 			elseif ($chart_type == 'attendance') {
 				$out['chart'] = $this->getChartHtml($group_id);
@@ -798,6 +884,25 @@
 				$smarty->assign('chart', $this->getChartHtml($this->group_id, $this->branch_id, $this->teacher_id));
 			}
 		}
+		
+		
+		protected function taskMarks($params=array()) {
+			$smarty = Application::getSmarty();			
+			
+			if (profileHelperLibrary::canEditGroupData()) {
+				$page = Application::getPage();
+				$page->addScript('/applications/abc/static/js/jquery.mCustomScrollbar.min.js');
+				$page->addStylesheet(Application::getApplicationUrl() . '/static/css/jquery.mCustomScrollbar.css');
+				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.1');
+			}
+			
+			$this->groupLogic();
+			
+			if ($this->group_id || $this->branch_id || $this->teacher_id) {			
+				$smarty->assign('chart', $this->getMarksChartHtml($this->group_id, $this->branch_id, $this->teacher_id));
+			}
+		}
+		
 		
 		
 		protected function taskHomework($params=array()) {
@@ -1099,6 +1204,61 @@
 		
 			
 		}
+		
+		
+		
+		protected function getMarksChartHtml($group_id, $branch_id=null, $teacher_id=null) {
+			if (($branch_id || $teacher_id) && !$group_id) {
+				
+				$groups = $this->getGroupsForChart($branch_id, $teacher_id);								
+				if (!$groups) return array();
+				
+				$out = array();
+				$smarty = Application::getSmarty();
+				foreach($groups as $g) {
+					$chart = $this->getMarksChartHtml($g->id);
+					
+					$out[$g->id] = array(
+						'schedule' => $this->getGroupScheduleHtml($g->id, true),
+						'group_name' => $g->title,
+						'data' => $smarty->_tpl_vars['marks_data'], 
+						'chart' => $chart
+					);
+				}
+				
+				return $out;			
+			}
+
+			
+			$marks = Application::getEntityInstance('user_marks');
+			$marks_data = $marks->loadForGroup($group_id, $this->attendance_from_mysql, $this->attendance_to_mysql);
+			profileHelperLibrary::addPopupInfoLinks($marks_data);
+			
+			//print_r($marks_data);
+						
+			$smarty = Application::getSmarty();
+			$smarty->assign('marks_data', $marks_data);
+			$smarty->assign('marks_data_' . $group_id, $marks_data);
+			
+			$column_keys = array();
+			if ($marks_data) {
+				$user_ids = array_keys($marks_data);
+				foreach($marks_data[$user_ids[0]]['marks'] as $time=>$a) {
+					$column_keys[$time] = $a['entry_id'];	
+				}
+								
+			} 
+			
+			$smarty->assign('column_keys', $column_keys);
+			$smarty->assign('columns_count', count($column_keys));
+			$smarty->assign('can_edit', profileHelperLibrary::canEditGroupData());
+			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditGroupData());
+			
+			return $smarty->fetch($this->getTemplatePath('marks_chart'));
+		
+			
+		}
+		
 		
 		
 		protected function getPaymentChartHtml($group_id, $branch_id, $start_year, $teacher_id=null) {

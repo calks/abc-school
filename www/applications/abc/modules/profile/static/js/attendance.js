@@ -7,7 +7,20 @@
 			
 			var acontainer = $(this);
 			var acontainer_id = acontainer.attr('id');
-			var entity_name = acontainer.hasClass('payment') ? 'payment' : 'attendance';
+			
+			
+			var entity_name;
+			
+			if (acontainer.hasClass('payment')) {
+				entity_name = 'payment';
+			}
+			else if (acontainer.hasClass('marks')) {
+				entity_name = 'marks';
+			}
+			else {
+				entity_name = 'attendance';
+			}
+			
 		
 			var table = acontainer.find('table.chart');
 			
@@ -179,6 +192,15 @@
 							comment: $(this).parents('td').find('textarea').val()
 						});					
 					});
+					
+					cells.find('input[name^=marks]').each(function(){
+						data['users'].push({
+							id: $(this).attr('data-user-id'),
+							mark: $(this).val(),
+							comment: $(this).parents('td').find('textarea').val()
+						});					
+					});
+
 					
 					cells.find('input[name^=payed]').each(function(){
 						data['users'].push({
