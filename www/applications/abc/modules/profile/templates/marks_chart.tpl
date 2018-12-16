@@ -75,11 +75,11 @@
 											    <td id="col_{$col_number}" {if $user_data.marks.$time.missed_two}class="missed_two"{/if}>{strip}
 											    	<span class="data">												
 														{if $user_data.marks.$time.comment}
-															<span class="check comment" title="{$user_data.marks.$time.comment}"></span>												
-														{elseif $user_data.marks.$time.marks}
-															<span class="check plus"></span>
-														{else}
-															<span class="check minus"></span>													
+															<span class="check comment" title="{$user_data.marks.$time.comment}"></span>
+														{/if}													
+														
+														{if $user_data.marks.$time.marks}
+															<span class="check mark">{$user_data.marks.$time.marks}</span>																											
 														{/if}
 		
 														{if $can_edit}

@@ -316,6 +316,7 @@ body {
 	background: url(../img/bullet.gif) center no-repeat;
 }
 
+.attendance .chart .check.mark,
 .attendance .chart .check.plus,
 .attendance .chart .check.minus,
 .attendance .chart .check.comment {
@@ -329,6 +330,21 @@ body {
 .attendance .chart .check.minus {
 	background-color: #aa6666;
 	background-position: -64px -128px;
+}
+
+
+.attendance .chart .check.mark {
+	background: #fdd5aa;
+	font-weight: bold;	
+}
+
+
+.attendance.marks .chart .check.comment,
+.attendance.marks .chart .check.mark {
+	display: inline-block;
+	vertical-align: middle;	
+	margin-left: 3px;
+	margin-right: 3px; 
 }
 
 .attendance .chart .check.comment {
