@@ -5,6 +5,10 @@
 		{if $user->role=='student'}
 		
 			{assign var=user_id value=$user->id}
+			
+			<pre>
+				{$marks_data.$user_id.marks|@print_r}
+			</pre>
 					
 			{if !$marks_data.$user_id.marks}
 				<p>Нет ни одной записи в журнале</p>
@@ -18,7 +22,7 @@
 									Дата и время занятия
 								</th>
 								<th>
-									Присутствие
+									Оценка
 								</th>
 								<th>
 									Комментарий
@@ -31,11 +35,10 @@
 									<td class="wide {if $att.missed_two}missed_two{/if}">{$time|date_format:'%d.%m.%Y %H:%M'}</td>
 									<td class="{if $att.missed_two}missed_two{/if}">
 										{if $att.comment}
-											<span class="check comment" title=""></span>												
-										{elseif $att.marks}
-											<span class="check plus"></span>
-										{else}
-											<span class="check minus"></span>													
+											<span class="check comment" title=""></span>
+										{/if}													
+										{if $att.marks}
+											<span class="check mark">{$att.marks}</span>																							
 										{/if}
 									</td>
 									<td class="last {if $att.missed_two}missed_two{/if}" style="text-align:left; padding: 3px 10px">
