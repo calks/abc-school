@@ -5,16 +5,12 @@
 		{if $user->role=='student'}
 		
 			{assign var=user_id value=$user->id}
-			
-			<pre>
-				{$marks_data.$user_id.marks|@print_r}
-			</pre>
 					
 			{if !$marks_data.$user_id.marks}
 				<p>Нет ни одной записи в журнале</p>
 			{else}
 		
-				<div class="attendance for_user">
+				<div class="attendance marks for_user">
 					<div class="chart_container">					
 						<table class="chart for-student">
 							<tr>
@@ -34,11 +30,11 @@
 								<tr class="{cycle values='odd,even'}">
 									<td class="wide {if $att.missed_two}missed_two{/if}">{$time|date_format:'%d.%m.%Y %H:%M'}</td>
 									<td class="{if $att.missed_two}missed_two{/if}">
-										{if $att.comment}
-											<span class="check comment" title=""></span>
-										{/if}													
 										{if $att.marks}
 											<span class="check mark">{$att.marks}</span>																							
+										{/if}
+										{if $att.comment}
+											<span class="check comment" title=""></span>
 										{/if}
 									</td>
 									<td class="last {if $att.missed_two}missed_two{/if}" style="text-align:left; padding: 3px 10px">

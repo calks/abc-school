@@ -347,6 +347,11 @@ body {
 	margin-right: 3px; 
 }
 
+
+.attendance.marks.for_user .chart .check {
+	margin-top: 0;	
+}
+
 .attendance .chart .check.comment {
 	background-color: #999;
 	background-position: -32px -144px;	
