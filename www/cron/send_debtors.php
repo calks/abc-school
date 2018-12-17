@@ -203,7 +203,7 @@
 	//die($body);
 	//$emails = array('alexey@cyberly.ru');
 	$emails = array(
-		'kornat25@mail.ru',
+		'irina-larchenko1@mail.ru',
 		'elenbegun@hotmail.com', 
 		'school.abc@mail.ru'
 	);
