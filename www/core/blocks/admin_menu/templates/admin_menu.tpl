@@ -30,6 +30,7 @@
 		    
 		    <li><a href="/admin/admin_slideshow">Слайдшоу</a></li>		    
 		    <li><a href="/admin/admin_holiday">Праздники</a></li>
+		    <li><a href="/admin/admin_debtors">Должники</a></li>
 		    
 		</ul>
 	
