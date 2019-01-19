@@ -110,9 +110,9 @@
 			            
 			            $msg = MailSender::createMessage();
 			            
-			            $msg->setSubject(encode_header_utf_8("abc-school.ru: напоминание пароля"));
-			            $msg->setFrom('no-reply@abc-school.ru', encode_header_utf_8('Лингвоцентр ABC'));
-			            $msg->setReplyTo('no-reply@abc-school.ru', encode_header_utf_8('Лингвоцентр ABC'));
+			            $msg->setSubject("abc-school.ru: напоминание пароля");
+			            $msg->setFrom('no-reply@abc-school.ru', 'Лингвоцентр ABC');
+			            $msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
 			            $msg->setBody($message, "text/html", "utf-8", "8bit");
 			            $msg->addTo($email);
 			            MailSender::send($msg);
@@ -256,9 +256,9 @@
 			            
 			            $msg = MailSender::createMessage();
 			            
-			            $msg->setSubject(encode_header_utf_8("abc-school.ru: напоминание пароля"));
-			            $msg->setFrom('no-reply@abc-school.ru', encode_header_utf_8('Лингвоцентр ABC'));
-			            $msg->setReplyTo('no-reply@abc-school.ru', encode_header_utf_8('Лингвоцентр ABC'));
+			            $msg->setSubject("abc-school.ru: напоминание пароля");
+			            $msg->setFrom('no-reply@abc-school.ru', 'Лингвоцентр ABC');
+			            $msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
 			            $msg->setBody($message, "text/html", "utf-8", "8bit");
 			            $msg->addTo($email);
 			            $password_sent = MailSender::send($msg);

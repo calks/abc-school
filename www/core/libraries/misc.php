@@ -511,9 +511,3 @@
     }
     
     
-	function encode_header_utf_8($str) {
-		if (!$str) return "";
-	    return '=?utf-8?B?'.base64_encode($str).'?=';
-	}
-    
-

@@ -46,9 +46,9 @@
 	
 	foreach ($emails as $e) {
 		$msg = MailSender::createMessage();            
-		$msg->setSubject(encode_header_utf_8(strip_tags($subject)));
-		$msg->setFrom('no-reply@abc-school.ru', encode_header_utf_8('Лингвоцентр ABC'));
-		$msg->setReplyTo('no-reply@abc-school.ru', encode_header_utf_8('Лингвоцентр ABC'));
+		$msg->setSubject(strip_tags($subject));
+		$msg->setFrom('no-reply@abc-school.ru', 'Лингвоцентр ABC');
+		$msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
 		$msg->setBody($body, "text/html", "utf-8", "8bit");
 		$msg->addTo($e);
 		MailSender::send($msg);		

@@ -43,9 +43,9 @@
             
             $msg = MailSender::createMessage();
             
-            $msg->setSubject(encode_header_utf_8("Ответ на ваш вопрос от Лингвоцентра ABC"));
-            $msg->setFrom('no-reply@abc-school.ru', encode_header_utf_8('Лингвоцентр ABC'));
-            $msg->setReplyTo('no-reply@abc-school.ru', encode_header_utf_8('Лингвоцентр ABC'));
+            $msg->setSubject("Ответ на ваш вопрос от Лингвоцентра ABC");
+            $msg->setFrom('no-reply@abc-school.ru', 'Лингвоцентр ABC');
+            $msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
             $msg->setBody($message, "text/html", "utf-8", "8bit");
             $msg->addTo($this->objects[0]->author_email);
             MailSender::send($msg);			
