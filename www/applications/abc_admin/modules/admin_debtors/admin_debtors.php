@@ -15,7 +15,7 @@
 			
 			header("Content-Type: text/html");
 			header("Content-Length: ".strlen($html));              
-			$filename = rawurlencode("Должники на " . date('d.m.Y'));
+			$filename = rawurlencode("Должники на " . date('d.m.Y').'.html');
 			header("Content-Disposition: attachment; filename*=UTF-8''$filename");
 			
 			
