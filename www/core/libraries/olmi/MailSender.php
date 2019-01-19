@@ -26,7 +26,7 @@
 		
 		
 		public static function send($msg, $additional_parameters = NULL) {
-			$msg->_send();
+			return $msg->_send();
 		}
 		
 		
