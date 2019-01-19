@@ -1,6 +1,5 @@
 <?php
 
-	use PHPMailer\PHPMailer\PHPMailer;
 
 	$site_root = realpath(dirname(__FILE__)."/../../../");
 	
@@ -43,7 +42,29 @@
 		
 		
   		public function MailSender() {
+  			
+  			
   			$this->phpmailer = new PHPMailer();
+  			
+  			$this->phpmailer->isSMTP();
+  			
+			$this->phpmailer->Host = SMTP_HOST; 
+			$this->phpmailer->Port = SMTP_PORT;
+             
+			$this->phpmailer->SMTPAuth = true; 
+			$this->phpmailer->Username = SMTP_USER;
+			$this->phpmailer->Password = SMTP_PASS;  
+
+			$this->phpmailer->SMTPDebug = true;
+			$this->phpmailer->Timeout = 10;
+			$this->phpmailer->CharSet = 'UTF-8';
+			
+            if (DKIM_ENABLED) {
+            	$this->phpmailer->DKIM_domain = DKIM_DOMAIN;
+            	$this->phpmailer->DKIM_selector = DKIM_SELECTOR;
+            	$this->phpmailer->DKIM_private = Application::getSitePath() . DKIM_PRIVATE_KEY_PATH;
+            }
+  			
 		}
 
 		public static function createMessage($params = NULL) {

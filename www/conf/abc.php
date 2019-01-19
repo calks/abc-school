@@ -30,6 +30,5 @@
     define("STATIC_PATH", Application::getSitePath() . '/applications/' . Application::getApplicationName() . '/static/' );
     define("STATIC_IMG_PATH", STATIC_PATH . 'img/' );
     
-    define('EMAIL_DESTINATION', 'school.abc@mail.ru');
-    //define('EMAIL_DESTINATION', 'contact@cyberly.ru');
+    require_once 'mail.php';
     
