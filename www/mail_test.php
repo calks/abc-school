@@ -12,7 +12,7 @@
     Application::loadLibrary('core/debug');
     Application::loadLibrary('page_properties_helper');
     
-	require_once 'core/libraries/olmi/MailSender2.php';
+	Application::loadLibrary('olmi/MailSender');
 
 
 	$message = "
