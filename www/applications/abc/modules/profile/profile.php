@@ -269,8 +269,18 @@
 				$table = $schedule->getTableName();
 				
 				$object_name = Request::get('object');
+				switch ($object_name) {
+					case 'homework':
+						$entry_name = 'homework';
+						break;
+					case 'marks':
+						$entry_name = 'user_marks';
+						break;
+					default:
+						$entry_name = 'user_attendance';
+				}
 				
-				$object = Application::getEntityInstance($object_name == 'homework' ? 'homework' : 'user_attendance');
+				$object = Application::getEntityInstance($entry_name);
 				$object_table = $object->getTableName(); 
 				
 				$sql = "
@@ -291,7 +301,7 @@
 					HAVING records_count=0
 					ORDER BY $table.starts_at
 				";						
-						
+					
 						
 				$db = Application::getDb();
 				$data = $db->executeSelectAllObjects($sql);

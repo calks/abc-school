@@ -244,8 +244,8 @@
 				
 				var is_empty = cells.find(':checked').size()==0 && cells.find('a.comment.has_one').size()==0;
 				
-				if (is_empty && entity_name=='attendance') {
-					var save_dialog = $('<div />').html('<p>Ни один пользователь не отмечен как присутствовавший.</p><p>В таких случаях считается, что занятия не было и колонка в таблице выводиться не будет.</p>').appendTo('body').dialog({
+				if (is_empty && (entity_name=='attendance' || entity_name=='marks')) {
+					var save_dialog = $('<div />').html('<p>Не было сделано ни одной записи.</p><p>В таких случаях считается, что занятия не было и колонка в таблице выводиться не будет.</p>').appendTo('body').dialog({
 						title: 'На занятии никого не было',
 						modal: true,
 						resizable: false,
@@ -306,7 +306,8 @@
 						dataType: 'json',
 						data: {
 							group_id: acontainer.find('[name=gid]').val(),
-							entry_date: date_select.val()
+							entry_date: date_select.val(),
+							object: entity_name
 						},
 						success: function(data){
 							_unblock();
