@@ -9,7 +9,7 @@
 		
 		
 		
-		public function loadForGroup($group_id, $from=null, $to=null) {
+		public function loadForGroup($group_id, $from=null, $to=null, $absent_twice_in_a_row_only=false) {
 			$group_id = (int)$group_id;
 			
 			$user = Application::getEntityInstance('user');
@@ -95,6 +95,7 @@
 				}
 			}
 			
+			$missed_two_users = array();
 			
 			foreach($out as $user_id=>&$data) {
 				$prev_datetime = null;
@@ -103,6 +104,7 @@
 					if (!$entry['attendance'] && !$prev_attendance) {
 						$entry['missed_two'] = true;
 						$data['missed_two'] = true;
+						$missed_two_users[$user_id] = $user_id;
 						if ($prev_datetime) {
 							$data['attendance'][$prev_datetime]['missed_two'] = true;
 						}
@@ -113,6 +115,16 @@
 			}
 			
 			
+			
+			if ($absent_twice_in_a_row_only) {
+				foreach($out as $user_id=>$data) {							
+					if (!$data['missed_two']) {						
+						unset($out[$user_id]);
+					}
+				}
+			}
+			
+						
 			return $out;
 
 		}

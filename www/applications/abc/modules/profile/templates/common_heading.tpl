@@ -37,7 +37,15 @@
 						{$from_select->getAsHtml()}
 						<label class="narrow">по</label>
 						{$to_select->getAsHtml()}
-					</div>	
+					</div>
+					{if $user->role!='student' && $object_name=='attendance'}
+						<div class="full_width">
+							<label></label>
+							<input type="checkbox" name="absent_twice_in_a_row_only" value="1" {if $smarty.get.absent_twice_in_a_row_only}checked="checked"{/if}>
+							&nbsp;&nbsp;только пропустившие 2 занятия подряд
+						</div>	
+					{/if}
+
 				{/if}	
 				
 				{if $user->role!='student' && $user->role!='teacher'}
@@ -86,6 +94,11 @@
 					$('input[name=debtors_only]').bind('click', function(){
 						submitFilter(this);
 					});
+
+					$('input[name=absent_twice_in_a_row_only]').bind('click', function(){
+						submitFilter(this);
+					});
+
 
 					
 					{/literal}{if $user->role!='student'}{literal}

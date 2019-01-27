@@ -1187,7 +1187,7 @@
 
 			
 			$attendance = Application::getEntityInstance('user_attendance');
-			$attendance_data = $attendance->loadForGroup($group_id, $this->attendance_from_mysql, $this->attendance_to_mysql);
+			$attendance_data = $attendance->loadForGroup($group_id, $this->attendance_from_mysql, $this->attendance_to_mysql, (bool)Request::get('absent_twice_in_a_row_only'));
 			profileHelperLibrary::addPopupInfoLinks($attendance_data);
 			
 			//print_r($attendance_data);

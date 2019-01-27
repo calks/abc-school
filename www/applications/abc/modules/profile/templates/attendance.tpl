@@ -1,5 +1,5 @@
 
-		{include file=$common_heading}
+		{include file=$common_heading object_name='attendance'}
 
 
 		{if $user->role=='student'}
