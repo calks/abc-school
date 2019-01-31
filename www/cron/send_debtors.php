@@ -37,16 +37,20 @@
 
 	//$emails = array('alexey@cyberly.ru');
 	$emails = array(
+		'alexey@cyberly.ru',
 		'irina-larchenko1@mail.ru',
 		'elenbegun@hotmail.com', 
 		'school.abc@mail.ru'
 	);
 	
+	$now = date('d.m.Y');
+	$subject = "Список должников за $period_start-$period_end год \n по состоянию на $now";
+		
 	Application::loadLibrary('olmi/MailSender');
 	
 	foreach ($emails as $e) {
 		$msg = MailSender::createMessage();            
-		$msg->setSubject(strip_tags($subject));
+		$msg->setSubject($subject);
 		$msg->setFrom('no-reply@abc-school.ru', 'Лингвоцентр ABC');
 		$msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
 		$msg->setBody($body, "text/html", "utf-8", "8bit");
@@ -54,7 +58,7 @@
 		MailSender::send($msg);		
 	}
 	
-	//die($body);
+
 
 	
 	
