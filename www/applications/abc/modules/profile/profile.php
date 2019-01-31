@@ -475,7 +475,7 @@
 				if (!$item['mark'] && !$item['comment']) continue;
 				$comment = addslashes($item['comment']);
 				$mark = (int)$item['mark'];
-				if ($mark<1 || $mark>5) $mark = 0;
+				if ($mark<1 || $mark>100) $mark = 0;
 				$values[] = "($uid, $entry_id, '$entry_date', '$comment', $mark)";
 			}
 			
@@ -885,7 +885,7 @@
 				$page = Application::getPage();
 				$page->addScript('/applications/abc/static/js/jquery.mCustomScrollbar.min.js');
 				$page->addStylesheet(Application::getApplicationUrl() . '/static/css/jquery.mCustomScrollbar.css');
-				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.1');
+				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.3');
 			}
 			
 			$this->groupLogic();
@@ -903,7 +903,7 @@
 				$page = Application::getPage();
 				$page->addScript('/applications/abc/static/js/jquery.mCustomScrollbar.min.js');
 				$page->addStylesheet(Application::getApplicationUrl() . '/static/css/jquery.mCustomScrollbar.css');
-				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.1');
+				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.3');
 			}
 			
 			$this->groupLogic();
@@ -937,7 +937,7 @@
 				$page = Application::getPage();
 				$page->addScript('/applications/abc/static/js/jquery.mCustomScrollbar.min.js');
 				$page->addStylesheet(Application::getApplicationUrl() . '/static/css/jquery.mCustomScrollbar.css');
-				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.1');
+				$page->addScript('/applications/abc/modules/profile/static/js/attendance.js?v=1.3');
 			}
 			
 			

@@ -242,7 +242,14 @@
 					});
 				}
 				
+				
 				var is_empty = cells.find(':checked').size()==0 && cells.find('a.comment.has_one').size()==0;
+				
+				if (entity_name=='marks') {					
+					cells.find('input[type=text]').each(function(){
+						if(jQuery.trim(jQuery(this).val())) is_empty = false;
+					});
+				}
 				
 				if (is_empty && (entity_name=='attendance' || entity_name=='marks')) {
 					var save_dialog = $('<div />').html('<p>Не было сделано ни одной записи.</p><p>В таких случаях считается, что занятия не было и колонка в таблице выводиться не будет.</p>').appendTo('body').dialog({
