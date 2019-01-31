@@ -243,7 +243,15 @@
 				}
 				
 				
-				var is_empty = cells.find(':checked').size()==0 && cells.find('a.comment.has_one').size()==0;
+				
+				if (entity_name=='marks') {
+					var is_empty = true;
+					cells.find('input[type=text]').each(function(){
+						if(jQuery.trim(jQuery(this).val())) is_empty = false;
+					});
+				}
+				else {
+					var is_empty = cells.find(':checked').size()==0 && cells.find('a.comment.has_one').size()==0;	
 				
 				if (entity_name=='marks') {					
 					cells.find('input[type=text]').each(function(){
