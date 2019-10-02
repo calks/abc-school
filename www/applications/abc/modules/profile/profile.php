@@ -98,25 +98,34 @@
 				'link' => Application::getSeoUrl("/{$this->getName()}/info")			
 			);
 			
-			$items['attendance'] = array(
-				'name' => 'Посещаемость',
-				'link' => Application::getSeoUrl("/{$this->getName()}/attendance")			
-			);
 			
-			$items['homework'] = array(
-				'name' => 'Домашние задания',
-				'link' => Application::getSeoUrl("/{$this->getName()}/homework")			
-			);
+			if(profileHelperLibrary::canOpenAttendanceTab()) {
+				$items['attendance'] = array(
+					'name' => 'Посещаемость',
+					'link' => Application::getSeoUrl("/{$this->getName()}/attendance")			
+				);
+			}
 			
-			$items['payment'] = array(
-				'name' => 'Оплата обучения',
-				'link' => Application::getSeoUrl("/{$this->getName()}/payment")			
-			);
+			if(profileHelperLibrary::canOpenHomeworkTab()) {
+				$items['homework'] = array(
+					'name' => 'Домашние задания',
+					'link' => Application::getSeoUrl("/{$this->getName()}/homework")			
+				);
+			}
+			
+			if(profileHelperLibrary::canOpenPaymentTab()) {
+				$items['payment'] = array(
+					'name' => 'Оплата обучения',
+					'link' => Application::getSeoUrl("/{$this->getName()}/payment")			
+				);
+			}
 
-			$items['marks'] = array(
-				'name' => 'Промежуточная успеваемость',
-				'link' => Application::getSeoUrl("/{$this->getName()}/marks")			
-			);
+			if(profileHelperLibrary::canOpenMarksTab()) {
+				$items['marks'] = array(
+					'name' => 'Промежуточная успеваемость',
+					'link' => Application::getSeoUrl("/{$this->getName()}/marks")			
+				);
+			}
 			
 			
 			$items['logout'] = array(

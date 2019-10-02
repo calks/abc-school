@@ -36,6 +36,29 @@
 			if (!$user_logged) return null;
 			return $user_logged->role;
 		} 
+
+		
+		public static function canOpenAttendanceTab() {
+			$role = self::getLoggedUserRole();
+			return in_array($role, array('admin', 'manager', 'teacher', 'director', 'student'));
+		}
+		
+		public static function canOpenHomeworkTab() {
+			$role = self::getLoggedUserRole();
+			return in_array($role, array('admin', 'manager', 'teacher', 'director', 'student'));
+		}
+		
+		public static function canOpenPaymentTab() {
+			$role = self::getLoggedUserRole();
+			return in_array($role, array('admin', 'teacher', 'director', 'student'));
+		}
+		
+		public static function canOpenMarksTab() {
+			$role = self::getLoggedUserRole();
+			return in_array($role, array('admin', 'manager', 'teacher', 'director', 'student'));
+		}
+		
+		
 		
 		public static function canEditProfile() {
 			$role = self::getLoggedUserRole();
