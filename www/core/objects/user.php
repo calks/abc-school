@@ -111,6 +111,7 @@
 			$out = get_empty_select($add_null_item);
 			
 			$out['admin'] = 'Администратор';
+			$out['director'] = 'Директор';
 			$out['manager'] = 'Менеджер';
 			$out['teacher'] = 'Преподаватель';
 			$out['student'] = 'Ученик (родитель)';
