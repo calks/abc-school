@@ -9,7 +9,7 @@
 			var popup_content = $('<div />').addClass('text').appendTo(popup);
 			
 			var buttons;
-			if (is_teacher_view_link) {
+			if (is_teacher_view_link || !can_edit_others_profile) {
 				buttons = {
 					'Закрыть': function(){
 						popup.dialog('close');
@@ -34,7 +34,7 @@
 			
 			
 			popup.dialog({
-				title: is_teacher_view_link ? 'Карточка преподавателя' : 'Редактирование карточки пользователя',
+				title: is_teacher_view_link ? 'Карточка преподавателя' : 'Карточка ученика',
 				width: 560,
 				position: 'center',
 				modal: true,

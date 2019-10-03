@@ -19,7 +19,7 @@
 		
 		public static function addPopupInfoLinks(&$data) {
 			if (!$data) return;
-			if (!self::canEditProfile()) return;
+			if (!self::canViewProfile()) return;
 			
 			foreach ($data as $user_id=>&$item) {
 				$item['info_link'] = Application::getSeoUrl("/profile/info/$user_id");
@@ -112,10 +112,16 @@
 			}
 		}
 				
+
+		public static function canViewProfile() {
+			$role = self::getLoggedUserRole();
+			return in_array($role, array('admin', 'manager', 'teacher', 'director'));
+		}
+		
 		
 		public static function canEditProfile() {
 			$role = self::getLoggedUserRole();
-			return in_array($role, array('admin', 'manager'));
+			return in_array($role, array('admin'));
 		}
 		
 		public static function canEditGroupData() {

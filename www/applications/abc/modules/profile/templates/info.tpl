@@ -32,24 +32,46 @@
 					{/if}	
 	
 					
+					{if $form->fields.firstname}
+						<div class="full_width">
+							{if $errors.firstname}<div class="error firstname">{$errors.firstname}</div>{/if}
+							<label>Имя *</label>
+							{$form->render('firstname')}
+						</div>
+					{elseif $info_user->firstname}
+						<div class="full_width">					
+							<label>Имя</label>
+							<b>{$info_user->firstname}</b>						
+						</div>
+					{/if}	
+
+
+					{if $form->fields.lastname}
+						<div class="full_width">
+							{if $errors.lastname}<div class="error lastname">{$errors.lastname}</div>{/if}
+							<label>Фамилия *</label>
+							{$form->render('lastname')}
+						</div>
+					{elseif $info_user->lastname}
+						<div class="full_width">					
+							<label>Фамилия</label>
+							<b>{$info_user->lastname}</b>						
+						</div>
+					{/if}	
 					
-					<div class="full_width">
-						{if $errors.firstname}<div class="error firstname">{$errors.firstname}</div>{/if}
-						<label>Имя *</label>
-						{$form->render('firstname')}
-					</div>
-					
-					<div class="full_width">
-						{if $errors.lastname}<div class="error lastname">{$errors.lastname}</div>{/if}
-						<label>Фамилия *</label>
-						{$form->render('lastname')}
-					</div>
-	
-					<div class="full_width">
-						{if $errors.email}<div class="error email">{$errors.email}</div>{/if}
-						<label>Email *</label>
-						{$form->render('email')}
-					</div>
+					{if $form->fields.email}		
+						<div class="full_width">
+							{if $errors.email}<div class="error email">{$errors.email}</div>{/if}
+							<label>Email *</label>
+							{$form->render('email')}
+						</div>
+					{elseif $info_user->email}
+						<div class="full_width">					
+							<label>Email</label>
+							<b>{$info_user->email}</b>						
+						</div>
+					{/if}	
+						
 	
 					{if $form->fields.parents}
 						<div class="full_width">					
@@ -90,10 +112,18 @@
 					{/if}	
 					
 					
-					<div class="full_width">					
-						<label>Доп. инфо</label>
-						{$form->render('info')}
-					</div>
+					{if $form->fields.info}
+						<div class="full_width">					
+							<label>Доп. инфо</label>
+							{$form->render('info')}
+						</div>
+					{elseif $info_user->info}
+						<div class="full_width">					
+							<label>Доп. инфо</label>
+							<b>{$info_user->info}</b>						
+						</div>
+					{/if}	
+
 	
 					
 					{if $form->fields.new_pass}
@@ -111,9 +141,9 @@
 					{/if}	
 	
 						
-					<div class="comment">* - обязательное для заполнения поле</div>
+					{if $can_edit_profile}<div class="comment">* - обязательное для заполнения поле</div>{/if}
 					{$form->render('user_id')}
-					{if !$is_ajax}<input type="submit" class="submit" name="submit" value="Сохранить">{/if}
+					{if !$is_ajax && $can_edit_profile}<input type="submit" class="submit" name="submit" value="Сохранить">{/if}
 				{/if}	
 						
 			</form>

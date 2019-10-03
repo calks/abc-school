@@ -37,7 +37,7 @@
 			$page->addStylesheet(Application::getSiteUrl() . '/applications/abc/static/js/jquery-ui/css/ui-lightness/jquery-ui.css');
 			
 			//if (profileHelperLibrary::canEditProfile()) {
-				$page->AddScript("$static_dir/js/info_popup.js");	
+				$page->AddScript("$static_dir/js/info_popup.js");
 			//}
 				
 			
@@ -79,7 +79,7 @@
 			$smarty->assign('document', $document);
 			$smarty->assign('page_content', $page_content);			
 			$smarty->assign('menu', $this->getMenu());
-			
+			$smarty->assign('can_edit_others_profile', profileHelperLibrary::canEditProfile());			
 			
 			$main_template = $this->getTemplatePath('wrap');
 			return $smarty->fetch($main_template);
@@ -151,10 +151,22 @@
 			
 			
 			$profile_form->addField(new THiddenField('user_id', $user_id));
-			$profile_form->addField(new TEditField('firstname', '', 50, 100));
-			$profile_form->addField(new TEditField('lastname', '', 50, 100));
-			$profile_form->addField(new TEditField('email', '', 50, 100));
-			$profile_form->addField(new TTextField('info', '', 50, 4));
+			
+			if (in_array('firstname', $editable_fields)) {
+				$profile_form->addField(new TEditField('firstname', '', 50, 100));
+			}
+			
+			if (in_array('lastname', $editable_fields)) {
+				$profile_form->addField(new TEditField('lastname', '', 50, 100));
+			}
+			
+			if (in_array('email', $editable_fields)) {
+				$profile_form->addField(new TEditField('email', '', 50, 100));
+			}
+						
+			if (in_array('info', $editable_fields)) {
+				$profile_form->addField(new TTextField('info', '', 50, 4));
+			}
 			
 			if (in_array('new_pass', $editable_fields)) {
 				$profile_form->addField(new TPasswordField('new_pass', '', 50, 100));
@@ -177,7 +189,7 @@
 			return $profile_form;			
 		}
 		
-		protected function getInfoEditableFields($user_id) {
+		protected function getInfoEditableFields($user_id) { 
 			$user = Application::getEntityInstance('user');
 			$user_id = (int)$user_id;
 			$user = $user->load($user_id);
@@ -185,6 +197,11 @@
 			
 			$user_role = $user->role;
 			$editing_own_profile = $user_id == $this->user->id;
+			
+			if (!$editing_own_profile && !profileHelperLibrary::canEditProfile()) {
+				return array();
+			}
+			
 			
 			$out = array(
 				'firstname',
@@ -198,13 +215,13 @@
 				$out[] = 'new_pass_confirmation';
 			}
 			
-			if (profileHelperLibrary::canEditProfile()) {
+			//if (profileHelperLibrary::canEditProfile()) {
 				$out[] = 'cell_phone';
 				if ($user_role == 'student') {
 					$out[] = 'parents';
 					$out[] = 'phone';
 				}
-			}
+			//}
 			
 			return $out;
 		}
@@ -505,7 +522,7 @@
 		
 		
 		protected function taskStudent_lookup($params=array()) {
-			if (!profileHelperLibrary::canEditProfile()) die();
+			if (!profileHelperLibrary::canViewProfile()) die();
 			$name = Request::get('name');
 			$name = addslashes($name);
 			
@@ -1028,7 +1045,7 @@
 			$viewing_teacher = $this->user->role=='student' && $user->role == 'teacher' && in_array($viewer_group_id, $user->group_id);	
 			$viewing_own_profile = $this->user->id == $user_id;
 
-			if (!profileHelperLibrary::canEditProfile() && !$viewing_own_profile && !$viewing_teacher || $viewing_teacher && isset($_REQUEST['submit'])) {
+			if (!profileHelperLibrary::canViewProfile() && !$viewing_own_profile && !$viewing_teacher || $viewing_teacher && isset($_REQUEST['submit'])) {
 				if ($is_ajax) {
 					die(json_encode(array(
 						'error' => 'Вы не можете редактировать данные других пользователей'
@@ -1085,6 +1102,7 @@
 			$smarty->assign('errors', $errors);
 			$smarty->assign('message', $message);		
 			$smarty->assign('form_action', Application::getSeoUrl($form_action));
+			$smarty->assign('can_edit_profile', profileHelperLibrary::canEditProfile() || $viewing_own_profile);
 			
 			if ($is_ajax) {
 				die(json_encode(array(
@@ -1196,7 +1214,7 @@
 
 			
 			$attendance = Application::getEntityInstance('user_attendance');
-			$attendance_data = $attendance->loadForGroup($group_id, $this->attendance_from_mysql, $this->attendance_to_mysql, (bool)Request::get('absent_twice_in_a_row_only'));
+			$attendance_data = $attendance->loadForGroup($group_id, $this->attendance_from_mysql, $this->attendance_to_mysql, (bool)Request::get('absent_twice_in_a_row_only'));			
 			profileHelperLibrary::addPopupInfoLinks($attendance_data);
 			
 			//print_r($attendance_data);
