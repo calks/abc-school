@@ -637,7 +637,7 @@
 			
 			
 			$teacher_logged = $this->user->role == 'teacher';
-			$admin_logged = in_array($this->user->role, array('manager', 'admin'));
+			$admin_logged = in_array($this->user->role, array('director', 'admin'));
 			
 			$edit_granted = $teacher_logged || $admin_logged;
 			if ($teacher_logged) {
@@ -1103,7 +1103,7 @@
 			$smarty = Application::getSmarty();
 			$smarty->assign('homework_data', $homework_data);
 			//$smarty->assign('can_edit', $this->user->role == 'teacher');
-			$smarty->assign('can_edit', profileHelperLibrary::canEditGroupData());
+			$smarty->assign('can_edit', profileHelperLibrary::canEditHomework());
 			
 			return $smarty->fetch($this->getTemplatePath('homework_chart'));			
 		}
@@ -1216,8 +1216,8 @@
 			
 			$smarty->assign('column_keys', $column_keys);
 			$smarty->assign('columns_count', count($column_keys));
-			$smarty->assign('can_edit', profileHelperLibrary::canEditGroupData());
-			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditGroupData());
+			$smarty->assign('can_edit', profileHelperLibrary::canEditAttendance());
+			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditStudentNotes());
 			
 			return $smarty->fetch($this->getTemplatePath('attendance_chart'));
 		
@@ -1270,8 +1270,8 @@
 			
 			$smarty->assign('column_keys', $column_keys);
 			$smarty->assign('columns_count', count($column_keys));
-			$smarty->assign('can_edit', profileHelperLibrary::canEditGroupData());
-			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditGroupData());
+			$smarty->assign('can_edit', profileHelperLibrary::canEditMarks());
+			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditStudentNotes());
 			
 			return $smarty->fetch($this->getTemplatePath('marks_chart'));
 		
@@ -1330,7 +1330,7 @@
 			$smarty->assign('column_keys', $column_keys);
 			$smarty->assign('columns_count', count($column_keys));
 			$smarty->assign('can_edit', profileHelperLibrary::canEditPayment());
-			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditGroupData());
+			$smarty->assign('can_edit_user_notes', profileHelperLibrary::canEditStudentNotes());
 			$smarty->assign('start_year', $start_year);
 			
 			

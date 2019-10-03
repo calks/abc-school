@@ -59,6 +59,59 @@
 		}
 		
 		
+		public static function canEditAttendance() {
+			$role = self::getLoggedUserRole();
+			
+			switch ($role) {
+				case 'admin':				
+				case 'director':
+				case 'teacher':
+					return true;	
+				default: 
+					return false;
+			}
+		}
+		
+		
+		public static function canEditHomework() {
+			$role = self::getLoggedUserRole();
+			
+			switch ($role) {
+				case 'admin':
+				case 'teacher':
+					return true;	
+				default: 
+					return false;
+			}
+		}
+		
+		
+		public static function canEditMarks() {
+			$role = self::getLoggedUserRole();
+			
+			switch ($role) {
+				case 'admin':
+				case 'teacher':
+					return true;	
+				default: 
+					return false;
+			}
+		}
+		
+		
+		public static function canEditStudentNotes($group_id) {
+			$role = self::getLoggedUserRole();
+			
+			switch ($role) {
+				case 'admin':				
+				case 'director':
+				case 'teacher':
+					return true;	
+				default: 
+					return false;
+			}
+		}
+				
 		
 		public static function canEditProfile() {
 			$role = self::getLoggedUserRole();
@@ -67,7 +120,7 @@
 		
 		public static function canEditGroupData() {
 			$role = self::getLoggedUserRole();
-			return in_array($role, array('admin', 'manager', 'teacher'));
+			return in_array($role, array('admin', 'manager', 'teacher', 'director'));
 		}
 		
 		public static function canEditPayment() {
