@@ -653,10 +653,10 @@
 			$users = $user->load_list($user_load_params);
 			
 			
+			$edit_granted = profileHelperLibrary::canEditStudentNotes();
 			$teacher_logged = $this->user->role == 'teacher';
-			$admin_logged = in_array($this->user->role, array('director', 'admin'));
+						
 			
-			$edit_granted = $teacher_logged || $admin_logged;
 			if ($teacher_logged) {
 				foreach ($users as $u) {					
 					$same_group = count(array_intersect($this->user->group_id, $u->group_id)) != 0;					
@@ -760,7 +760,7 @@
 					$this->group_id = $group_id_from_student_id;	
 				}
 				else {
-					$is_manager = in_array($this->user->role, array('admin', 'manager')); 
+					$is_manager = profileHelperLibrary::isManagerLogged(); 
 					if ($is_manager) {
 						$this->teacher_id = (int)Request::get('teacher');
 					}
@@ -781,7 +781,7 @@
 				$smarty->assign('group_schedule_html', $this->getGroupScheduleHtml($this->group_id));
 				$smarty->assign('group_title', isset($groups[$this->group_id]) ? $groups[$this->group_id]->name : '');
 				
-				if (!in_array($this->user->role, array('admin', 'manager')) && !in_array($this->group_id, $this->user->group_id)) {
+				if (!profileHelperLibrary::isManagerLogged() && !in_array($this->group_id, $this->user->group_id)) {
 					$this->task = 'authority_error';
 					$this->terminate();
 					$this->group_id = null;
@@ -814,7 +814,7 @@
 			}
 			else {
 				$group = Application::getEntityInstance('user_group');
-				$group_options = $group->getSelect('-- Выберите группу --', $this->branch_id, $this->teacher_id);
+				$group_options = $group->getSelect('-- Выберите группу --', $this->branch_id, $this->teacher_id);				
 				$branch_options = $group->getBranchSelect('-- Выберите филиал --'); 
 				$teacher = Application::getEntityInstance('user');				
 			}
@@ -854,7 +854,7 @@
 
 		
 		protected function getTeacherSelect() {
-			$can_search_by_teacher = in_array($this->user->role, array('admin', 'manager'));
+			$can_search_by_teacher = profileHelperLibrary::isManagerLogged();
 			if (!$can_search_by_teacher) return null;
 			$teacher = Application::getEntityInstance('user');
 			$alias = $teacher->getTableAlias($teacher->getTableName());

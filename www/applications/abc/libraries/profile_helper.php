@@ -37,6 +37,12 @@
 			return $user_logged->role;
 		} 
 
+
+		public static function isManagerLogged() {
+			$role = self::getLoggedUserRole();
+			return in_array($role, array('admin', 'manager', 'director'));
+		}
+		
 		
 		public static function canOpenAttendanceTab() {
 			$role = self::getLoggedUserRole();
