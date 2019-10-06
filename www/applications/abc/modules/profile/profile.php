@@ -779,6 +779,7 @@
 				//print_r($groups);
 				$smarty->assign('teacher_names', isset($groups[$this->group_id]) ? $groups[$this->group_id]->teacher_names : '');
 				$smarty->assign('group_schedule_html', $this->getGroupScheduleHtml($this->group_id));
+				$smarty->assign('group_schedule_day_numbers', $this->getGroupScheduleDayNumbers($this->group_id));
 				$smarty->assign('group_title', isset($groups[$this->group_id]) ? $groups[$this->group_id]->name : '');
 				
 				if (!profileHelperLibrary::isManagerLogged() && !in_array($this->group_id, $this->user->group_id)) {
@@ -901,6 +902,24 @@
 			$smarty->assign('in_chart', $in_chart);
 			$template_path = $this->getTemplatePath('schedule');
 			return $smarty->fetch($template_path);
+		}
+		
+		
+		protected function getGroupScheduleDayNumbers($group_id) {
+			$group_id = (int)$group_id;
+			if (!$group_id) return array();
+			$schedule = Application::getEntityInstance('user_group_schedule');
+			$weeksdays = $schedule->getWeekdays();
+			$schedule = $schedule->loadCollection($group_id);
+			
+			$out = array();
+			foreach ($weeksdays as $day_number => $day_name) {
+				if (empty($schedule[$day_number])) continue;
+				$out[] = $day_number;
+			}
+			
+			return implode('|', $out);
+			
 		}
 		
 
@@ -1203,6 +1222,7 @@
 					
 					$out[$g->id] = array(
 						'schedule' => $this->getGroupScheduleHtml($g->id, true),
+						'schedule_days' => $this->getGroupScheduleDayNumbers($g->id),
 						'group_name' => $g->title,
 						'data' => $smarty->_tpl_vars['attendance_data'], 
 						'chart' => $chart
@@ -1257,6 +1277,7 @@
 					
 					$out[$g->id] = array(
 						'schedule' => $this->getGroupScheduleHtml($g->id, true),
+						'schedule_days' => $this->getGroupScheduleDayNumbers($g->id),
 						'group_name' => $g->title,
 						'data' => $smarty->_tpl_vars['marks_data'], 
 						'chart' => $chart
@@ -1316,6 +1337,7 @@
 					
 					$out[$g->id] = array(
 						'schedule' => $this->getGroupScheduleHtml($g->id, true),
+						'schedule_days' => $this->getGroupScheduleDayNumbers($g->id),
 						'month_price' => $g->month_price_str,
 						'month_price_comment' => $g->month_price_comment,
 						'group_name' => $g->title,

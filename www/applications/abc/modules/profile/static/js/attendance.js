@@ -329,7 +329,8 @@
 					
 				});
 				
-				
+				var active_days = acontainer.find('[name=gdays]').val().split('|');
+								
 				date_dialog.dialog({
 					title: 'Создание записи в журнале посещаемости',
 					modal: true,
@@ -369,7 +370,15 @@
 							dateFormat: 'dd.mm.yy',
 							changeMonth: true,
 							changeYear: true,
-							yearRange: (yyyy-1) + ':' + yyyy
+							yearRange: (yyyy-1) + ':' + yyyy,
+							beforeShowDay: function(date) {
+								var weekday_number = date.getDay();
+								if (weekday_number == 0) {
+									weekday_number = 7;
+								}
+								
+								return [active_days.indexOf(weekday_number.toString()) != -1, '', ''];
+							}						
 						});
 						date_select.change();
 					}				
