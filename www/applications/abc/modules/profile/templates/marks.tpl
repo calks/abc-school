@@ -59,6 +59,7 @@
 							{$gchart.schedule}
 							<div class="attendance marks" id="att_{$gid}">
 								<input type="hidden" name="gid" value="{$gid}">
+								<input type="hidden" name="gdays" value="{$gchart.schedule_days}">
 								<ul class="students">
 									{assign var=num value=1}
 									{foreach from=$gchart.data key=user_id item=user_data}
@@ -89,6 +90,7 @@
 				{else}
 					<div class="attendance marks" id="att">
 						<input type="hidden" name="gid" value="{$smarty.get.group}">
+						<input type="hidden" name="gdays" value="{$group_schedule_day_numbers}">
 						<ul class="students">
 							{assign var=num value=1}
 							{foreach from=$marks_data key=user_id item=user_data}
