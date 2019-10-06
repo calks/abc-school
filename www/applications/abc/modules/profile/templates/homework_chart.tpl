@@ -23,6 +23,7 @@
 										<a class="create" title="создать" href="#"></a>										
 										<a class="cancel hidden" title="отмена" href="#"></a>
 										<a class="save hidden" title="сохранить" href="#"></a>
+										<input type="hidden" name="schedule_weekdays" value="{$group_schedule_day_numbers}">
 									</td>
 								</tr>
 							{/if}

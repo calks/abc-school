@@ -972,6 +972,7 @@
 			
 			if ($this->group_id) {				
 				$smarty->assign('chart', $this->getHomeworkChartHtml($this->group_id));
+				$smarty->assign('group_schedule_day_numbers', $this->getGroupScheduleDayNumbers($this->group_id));
 			}
 		}
 		
