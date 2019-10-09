@@ -127,6 +127,14 @@
 				);
 			}
 			
+
+			
+			$items['tax_return_form'] = array(
+				'name' => 'Налоговый вычет',
+				'link' => Application::getSeoUrl("/{$this->getName()}/tax_return_form")			
+			);
+			
+			
 			
 			$items['logout'] = array(
 				'name' => 'Выход',
@@ -1492,6 +1500,138 @@
 			
 		}
 		
+		
+		
+		protected function taskTax_return_form($params=array()) {
+			
+			$form = $this->getTaxReturnForm();
+			$this->errors = array();
+			
+			Application::loadLibrary('captcha');
+			
+			$this->captcha = new captcha($this->getName());
+			
+			$static_dir = Application::getModuleUrl($this->getName()) . '/static';			
+			$page = Application::getPage();
+			$page->AddStylesheet("$static_dir/css/education_form.css");
+			$page->AddScript("$static_dir/js/form_switch.js");
+			
+			if (Request::isPostMethod()) {
+				$form->LoadFromRequest($_REQUEST);
+				
+				$this->validateForm();
+				if (!$this->errors) {
+					$this->sendTaxReturnForm();
+					Redirector::redirect("/education_form-thanks");	
+				}
+			}
+					
+						
+			$smarty = Application::getSmarty();
+			$smarty->assign('form', $form);
+			$smarty->assign('captcha', $this->captcha);
+			$smarty->assign('form_action', Application::getSeoUrl("/{$this->getName()}"));
+			$smarty->assign('errors', $this->errors);
+			$smarty->assign('warning_box_template', $this->getTemplatePath('warning_box'));
+			
+			$template_path = $this->getTemplatePath();
+			return $smarty->fetch($template_path);			
+		}
+		
+		
+		protected function validateForm() {
+			$phone = trim($form->getValue('phone'));
+			if (!$phone) {
+				$this->errors['phone'] = 'Введите, пожулуйста, контактный телефон';
+			}
+
+        	$email = $form->getValue('email');
+			if ($email && !email_valid($email)) {
+        		$this->errors['email'] = 'Email имеет неверный формат';        		
+        	}
+        	
+        	$mandatory = array(
+        		'address',        		
+        		'age',
+        	);
+        	
+
+			$name = trim($form->getValue('name'));
+			if (!$name) {
+				$this->errors['name'] = 'Нам нужно знать, как зовут нашего будущего ученика';
+			}
+			
+        	$captcha_code = $form->getValue('captcha');
+			if (!$this->captcha->code_valid($captcha_code)) {
+        		$this->errors['captcha'] = 'Вы ввели неверный код';
+        		$this->captcha->regenerate();
+        	}
+        	
+        	foreach($mandatory as $mf) {
+        		if (!trim($form->getValue($mf))) {
+        			$this->errors[$mf] = 'Вы пропустили обязательное поле';
+        		}        		
+        	}
+			
+		}
+		
+		protected function getTaxReturnForm() {
+			Application::loadLibrary('olmi/form');
+			
+			$form = new BaseForm();
+			
+			$form->addField(new TEditField('child_name', '', 100, 255));
+			$form->addField(new TEditField('child_birth_date', '', 30, 30));
+			$form->addField(new TEditField('parent_name', '', 100, 255));
+			$form->addField(new TEditField('parent_birth_date', '', 30, 30));
+			
+			$form->addField(new TRadioField('contracts_available_yn', '', array(
+				'Да' => 'Да',
+				'Нет' => 'Нет'
+			)));
+			
+			$form->addField(new THiddenField('periods_count', 1));
+			$form->addField(new THiddenField('files_count', 1));
+			
+			return $form;
+		}
+		
+		protected function getShiftSelect() {
+			return array(
+				'первая (утро)' => 'первая (утро)',
+				'вторая (день)' => 'вторая (день)'
+			);
+		}
+		
+		protected function sendTaxReturnForm($form) {
+			Application::loadLibrary('olmi/MailSender');
+            
+            
+            $smarty = Application::getSmarty();
+            $template_path = $this->getTemplatePath('email');
+            $smarty->assign('form', $form);
+            $smarty->assign('form_type', $form_type);
+            $smarty->assign('shift_select', $this->getShiftSelect());
+            
+            $message = $smarty->fetch($template_path);
+            
+            $msg = MailSender::createMessage();
+            $types_str = array(
+            	'kids' => 'дети',
+            	'adults' => 'взрослые',
+            	'preschool' => 'дошкольники'
+            );
+            $form_type = $types_str[$form_type];
+            
+            $msg->setSubject("abc-school.ru: заявка на обучение ($form_type)");
+            $msg->setFrom('no-reply@abc-school.ru', 'Лингвоцентр ABC');
+            $msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
+            $msg->setBody($message, "text/html", "utf-8", "8bit");
+            $msg->addTo(EMAIL_DESTINATION);
+            MailSender::send($msg);
+            
+		
+		}
 		
 
 		

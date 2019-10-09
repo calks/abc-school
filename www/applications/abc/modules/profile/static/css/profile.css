@@ -71,3 +71,7 @@ p.month_price .comment {
 .gname .comment {
 	display: block;
 }
+
+.tax_return_form {
+	padding: 0;
+}
