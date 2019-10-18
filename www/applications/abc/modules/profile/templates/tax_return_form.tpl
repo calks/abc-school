@@ -1,10 +1,15 @@
 
+	<script type="text/javascript">
+		var education_periods_options = {$education_periods_options|@json_encode};
+	</script>
+
+
 	<div class="text fields education_form_module tax_return_form">
 		
 		<h1>Заявка на налоговый вычет</h1>
 		
 		
-		<form class="" action="{$form_action}" method="post">
+		<form class="" action="{$form_action}" method="post" enctype="multipart/form-data">
 			
 			<h2>Информация о ребенке</h2>
 			<div class="full_width">
@@ -32,13 +37,48 @@
 			</div>
 			
 			<h2 class="separated">Период и стоимость обучения</h2>
+			
+			{if $errors.education_periods}<div class="error education_periods">{$errors.education_periods}</div>{/if}
+			<div id="education-periods">
+				<label>Периоды обучения и стоимость</label>
+				<div class="multiple-options">
+					<div class="user-inputs">
+					
+					</div>
+					<div class="data-inputs">
+						{foreach item=item from=$education_periods}
+							<input type="hidden" class="period-start-year" name="education_periods[][start_year]" value="{$item.start_year}">
+							<input type="hidden" class="period-comment" name="education_periods[][start_year]" value="{$item.comment}">
+						{/foreach}
+					</div>
+					
+					<a href="#" class="add-period add-item">Добавить период обучения</a>
+				</div>
+			</div>
+
+			
+			{if $errors.files}<div class="error files">{$errors.files}</div>{/if}
+			
+			
 			{if $errors.contracts_available_yn}<div class="error learned_earlier">{$errors.contracts_available_yn}</div>{/if}
 			<label>У меня есть договоры на указанные периоды обучения</label>					
 			<div class="input_wrap">{$form->render('contracts_available_yn')}</div>
 			
+			<div class="row" id="files">
+				<label>Прикрепить квитанции/чеки</label>				
+				<div class="user-inputs">
+				
+				</div>
+				<div class="data-inputs">
+					{foreach item=item from=$education_periods}
+						<input type="hidden" class="period-start-year" name="education_periods[][start_year]" value="{$item.start_year}">						
+					{/foreach}
+				</div>
+				
+				<a href="#" class="add-period add-item">Добавить период обучения</a>
+			</div>
 			
 			
-			{$form->render('periods_count')}
 			{$form->render('files_count')}
 			
 			
@@ -51,169 +91,7 @@
 		</form>		
 		
 		
-		<form class="kids{if $form_type!='kids'} hidden{/if}" action="{$form_action}" method="post">
-			
-			<h2>Информация о ребенке</h2>
-			<div class="full_width">
-				{if $errors.kids_name}<div class="error kids_name">{$errors.kids_name}</div>{/if}
-				<label>ФИО *</label>
-				{$form->render('kids_name')}
-			</div>				
-			{if $errors.age}<div class="error age">{$errors.age}</div>{/if}
-			<div class="row">			
-				<label>Возраст *</label>
-				<div class="one_line">				
-					{$form->render('age')}
-					<label>Дата рождения</label>
-					{$form->render('birth_date')}
-				</div>
-			</div>
-			<div class="full_width">
-				{if $errors.school}<div class="error school">{$errors.school}</div>{/if}
-				<label>Школа *</label>
-				{$form->render('school')}
-			</div>					
-			{if $errors.grade}<div class="error grade">{$errors.grade}</div>{/if}
-			<div class="row">
-				<label>Класс *</label>
-				<div class="one_line">	
-					{$form->render('grade')}
-					<label>Смена</label>
-					{$form->render('shift')}
-					<label>Продленка</label>
-					{$form->render('prolonged')}
-				</div>
-			</div>	
-			
-			
-			<h2 class="separated">Информация о родителях</h2>
-			<div class="full_width">
-				{if $errors.parents_name}<div class="error parents_name">{$errors.parents_name}</div>{/if}
-				<label>ФИО *</label>
-				{$form->render('parents_name')}
-				<label>Место работы</label>
-				{$form->render('parents_job')}
-			</div>
-			
-			
-			<h2 class="separated">Контактные данные</h2>
-			<div class="full_width">
-				{if $errors.phone}<div class="error phone">{$errors.phone}</div>{/if}
-				<label>Телефон *</label>
-				{$form->render('phone')}
-				<div class="row">
-					{if $errors.address}<div class="error address">{$errors.address}</div>{/if}					
-					<label>Адрес *</label>
-					{$form->render('address')}
-				</div>
-				{if $errors.email}<div class="error email">{$errors.email}</div>{/if}
-				<label>Email</label>
-				{$form->render('email')}
-			</div>
-			
-			
-			<h2 class="separated">Дополнительная информация</h2>
-			<div class="full_width">
-				{if $errors.learned_earlier}<div class="error learned_earlier">{$errors.learned_earlier}</div>{/if}
-				<label>Изучали язык раньше? *</label>
-				{$form->render('learned_earlier')}
-				<label>Где и как долго?</label>
-				{$form->render('learned_earlier_detail')}
-				<label>Заметки, пожелания</label>
-				{$form->render('comments')}
-			</div>
-					
-			{if $errors.captcha}<div class="error captcha">{$errors.captcha}</div>{/if}
-			<div class="row">
-				<label>Код с рисунка *</label>
-				{$form->render('captcha')}
-	
-				{$captcha->display()}
-			</div>
-			
-			<div class="comment">* - обязательное для заполнения поле</div>
-			<input type="submit" class="submit" name="submit" value="Отправить">
-			<input type="hidden" name="form_type" value="kids">
-			
-			{include file=$warning_box_template}
-					
-		</form>
-		
-		
-		
-		
-		
-		
-		<form class="adults{if $form_type!='adults'} hidden{/if}" action="{$form_action}" method="post">
-			
-			<h2>Общая информация</h2>
-			<div class="full_width">
-				{if $errors.name}<div class="error name">{$errors.name}</div>{/if}
-				<label>ФИО *</label>
-				{$form->render('name')}
-			</div>
-			{if $errors.age}<div class="error age">{$errors.age}</div>{/if}
-			<div class="row">				
-				<label>Возраст *</label>
-				<div class="one_line">
-					{$form->render('age')}
-					<label>Дата рождения</label>
-					{$form->render('birth_date')}
-				</div>
-			</div>
-			<div class="full_width">
-				<label>Место работы</label>
-				{$form->render('parents_job')}
-			</div>
-			
-			
-			<h2 class="separated">Контактные данные</h2>
-			<div class="full_width">
-				{if $errors.phone}<div class="error phone">{$errors.phone}</div>{/if}
-				<label>Телефон *</label>
-				{$form->render('phone')}
-				<div class="row">
-					{if $errors.address}<div class="error address">{$errors.address}</div>{/if}
-					<label>Адрес *</label>
-					{$form->render('address')}
-				</div>
-				{if $errors.email}<div class="error email">{$errors.email}</div>{/if}
-				<label>Email</label>
-				{$form->render('email')}
-			</div>
-			
-			
-			<h2 class="separated">Дополнительная информация</h2>
-			<div class="full_width">
-				{if $errors.learned_earlier}<div class="error learned_earlier">{$errors.learned_earlier}</div>{/if}
-				<label>Изучали язык раньше? *</label>
-				{$form->render('learned_earlier')}
-				<label>Где и как долго?</label>
-				{$form->render('learned_earlier_detail')}
-				<label>Заметки, пожелания</label>
-				{$form->render('comments')}
-			</div>
-					
-			{if $errors.captcha}<div class="error captcha">{$errors.captcha}</div>{/if}
-			<div class="row">
-				<label>Код с рисунка *</label>
-				{$form->render('captcha')}
-			
-				{$captcha->display()}
-			</div>
-			
-			<div class="comment">* - обязательное для заполнения поле</div>
-			<input type="submit" class="submit" name="submit" value="Отправить">
-			<input type="hidden" name="form_type" value="adults">
-			
-			{include file=$warning_box_template}
-					
-		</form>		
-		
-		
-		
-		
-				
+						
 		
 		
 	</div>	

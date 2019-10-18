@@ -1501,6 +1501,19 @@
 		}
 		
 		
+		protected function getEducatiomPeriods() {
+			$start_year = 2016;
+			$end_year = date('j')>6 ? date('Y') : date('Y')-1;
+			
+			$out = array();
+			for ($y1=$start_year; $y1<=$end_year; $y1++) {
+				$y2 = $y1+1;
+				$out[$y1] = "$y1 - $y2";
+			}
+			
+			return $out;
+		}
+		
 		
 		protected function taskTax_return_form($params=array()) {
 			
@@ -1512,9 +1525,27 @@
 			$this->captcha = new captcha($this->getName());
 			
 			$static_dir = Application::getModuleUrl($this->getName()) . '/static';			
-			$page = Application::getPage();
-			$page->AddStylesheet("$static_dir/css/education_form.css");
-			$page->AddScript("$static_dir/js/form_switch.js");
+			$page = Application::getPage();			
+			$page->AddScript("$static_dir/js/tax_return_form.js");
+			
+			
+			$education_periods = array(
+				array(
+					'start_year' => 2019,
+					'comment' => 'test'
+				),
+				array(
+					'start_year' => 2016,
+					'comment' => 'test2'
+				)				
+				
+			);
+			
+			
+			$attachments = array(
+				null				
+			);
+			
 			
 			if (Request::isPostMethod()) {
 				$form->LoadFromRequest($_REQUEST);
@@ -1532,6 +1563,8 @@
 			$smarty->assign('captcha', $this->captcha);
 			$smarty->assign('form_action', Application::getSeoUrl("/{$this->getName()}"));
 			$smarty->assign('errors', $this->errors);
+			$smarty->assign('education_periods', $education_periods);
+			$smarty->assign('education_periods_options', $this->getEducatiomPeriods());
 			$smarty->assign('warning_box_template', $this->getTemplatePath('warning_box'));
 			
 			$template_path = $this->getTemplatePath();
