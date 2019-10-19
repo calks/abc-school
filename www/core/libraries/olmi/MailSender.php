@@ -35,6 +35,10 @@
 		}
 		
 		
+		public function addAttachment($path, $name = '', $encoding = 'base64', $type = '', $disposition = 'attachment') {
+			return $this->phpmailer->addAttachment($path, $name, $encoding, $type, $disposition);
+		}
+		
   		public function MailSender() {
   			
   			require_once Application::getSitePath() . '/vendor/autoload.php';
