@@ -7,6 +7,18 @@
 
 
 	<div class="text fields education_form_module tax_return_form">
+	
+		{if $smarty.get.sent}
+			<p class="success">
+				Данные были успешно отправлены
+			</p>
+		{/if}
+	
+		{if $errors.mail}
+			<p class="error">
+				{$errors.mail}
+			</p>
+		{/if}
 		
 		<h1>Заявка на налоговый вычет</h1>
 		

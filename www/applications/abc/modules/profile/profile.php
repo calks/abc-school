@@ -1610,8 +1610,9 @@
 		            	$msg->addAttachment($a);
 		            }
 		            
-		            //$msg->addTo(EMAIL_DESTINATION);
+		            $msg->addTo(EMAIL_DESTINATION);
 		            $msg->addTo('alexey@cyberly.ru');
+		            
 		            $sent = MailSender::send($msg);
 		            
 		            if ($sent) {
@@ -1637,7 +1638,7 @@
 			$smarty->assign('education_periods', $education_periods);
 			$smarty->assign('education_periods_options', $education_periods_options);
 			$smarty->assign('warning_box_template', $this->getTemplatePath('warning_box'));
-			$smarty->assign('files_count', 1);
+			$smarty->assign('files_count', 1);			
 			$smarty->assign('max_upload_size', $this->getUploadMaxSize());
 			
 			$template_path = $this->getTemplatePath();
