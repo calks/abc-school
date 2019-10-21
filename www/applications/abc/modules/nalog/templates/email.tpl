@@ -17,7 +17,7 @@
 				{$form->getValue('child_birth_date')}							
 			</p>
 			
-			<h2>Информация о родителях</h2>
+			<h2>Информация о родителях (на кого оформляется вычет)</h2>
 			<p>
 				<b>ФИО</b>
 				{$form->getValue('parent_name')}							
@@ -32,7 +32,7 @@
 			<p>
 				{foreach item=period from=$education_periods}
 					<b>{$period.period_name}</b>
-					{$period.comment}
+					{$period.comment}<br>
 				{/foreach}
 											
 			</p>

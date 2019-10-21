@@ -72,52 +72,6 @@ p.month_price .comment {
 	display: block;
 }
 
-.tax_return_form {
-	padding: 0;
-}
 
-
-.tax_return_form .multiple-options {
-	width: 740px;
-	float: left;
-}
-
-.tax_return_form .user-inputs > div {
-	clear: both;
-	margin: 3px 0;
-}
-
-.tax_return_form .user-inputs > div span {
-	display: block;
-	float: left;
-	height: 24px;
-	line-height: 24px;
-	margin: 0 10px 5px;
-}
-
-
-.tax_return_form .add-item {
-	display: block;
-	float: left;
-	clear: both;
-	font-size: 16px;
-	margin: 5px 0;
-	text-decoration: none;
-	border-bottom: 1px dotted;
-	color: #C85704;
-}
-
-.tax_return_form .remove-item {
-	text-decoration: none;
-	display: block;
-	width: 24px;
-	height: 24px;
-	text-align: center;
-	float: left;
-	font-size: 16px;
-	font-weight: bold;
-	color: #C85704;
-		
-}
 
 
