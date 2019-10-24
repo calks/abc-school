@@ -24,25 +24,54 @@
 			return 0;
 		}
 		
-		$('.quizz_module form .submit').live('click', function(){
-			answer_selected = getAnswerSelected();
-			if (!answer_selected) {
-				$(this).parents('form').find('.no_answer').html('Нужно выбрать вариант ответа');
-				return;
+		$('.quizz_module form .submit').live('click', function(event){
+			event.preventDefault();
+			
+			var form = $(this).parents('form');
+			var task = form.find('[name=task]').val();
+			
+			var data = {
+				task: task
 			}
-			else {
-				quizz_block();
-				$.ajax({
-					url: '/quizz/ajax',					
-					data: {answer_id: answer_selected},
-					type: 'POST',
-					success: function(data) {
-						quizz_unblock();
-						$('.quizz_module .dynamic').find(':not(.quizz_blocker)').remove();
-						$('.quizz_module .dynamic').append(data);
-					}					
-				});
-			}			
+			
+			switch (task) {
+				case 'answer':					
+					answer_selected = getAnswerSelected();
+					if (!answer_selected) {
+						form.find('.no_answer').html('Нужно выбрать вариант ответа');
+						return;
+					}
+					else {
+						data.answer_id = answer_selected;
+					}
+					break;
+					
+				case 'user_info':
+					data.name = form.find('[name=name]').val();
+					data.age = form.find('[name=age]').val();
+					data.school = form.find('[name=school]').val();
+					data.grade = form.find('[name=grade]').val();
+					data.phone = form.find('[name=phone]').val();
+					break;
+					
+				default: 
+					return false;
+			
+			}
+					
+					
+			quizz_block();
+			$.ajax({
+				url: '/quizz/ajax',					
+				data: data,
+				type: 'POST',
+				success: function(data) {
+					quizz_unblock();
+					$('.quizz_module .dynamic').find(':not(.quizz_blocker)').remove();
+					$('.quizz_module .dynamic').append(data);
+				}					
+			});
+			
 		});
 		
 		

@@ -20,6 +20,8 @@
 							
 			<input class="submit" type="button" name="submit" value="Ответить">
 			<div class="no_answer"></div>
+			<input type="hidden" name="task" value="answer">
+			
 
 		</form>
 	

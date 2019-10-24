@@ -55,20 +55,36 @@
         }
         
         
+        
+        protected function getStartForm() {
+        	$this->quizz_id = @(int)array_shift($params);        	
+        	if (!$this->quizz_id) return $this->terminate();
+        	        	
+        	$quizz = Application::getObjectInstance('quizz');
+        	$quizz_params = array('mode' => 'front');
+        	$quizz_params['where'][] = 'active=1';
+        	
+        	$this->quizz = $quizz->load($this->quizz_id, $quizz_params);
+        	if (!$this->quizz) return $this->terminate();
+        	
+        	
+        }
+        
+        
+        protected function getUserInfo() {
+        	$session_name = $this->getName() . '_user_info';
+        	return isset($_SESSION[$session_name]) ? $_SESSION[$session_name] : null;        	
+        }
+        
+        
+        protected function setUserInfo($info) {
+        	$session_name = $this->getName() . '_user_info';
+        	$_SESSION[$session_name] = $info;
+        }
+        
+        
+        
         protected function taskDetail($params=array()) {
-        	
-        	/*$this->restoreQuestions();
-			$smarty = Application::getSmarty();			
-			$smarty->assign('page_content', $this->generateResultPage());
-			$template_path = $this->getTemplatePath($this->action);	
-
-			$page = Application::getPage();
-			$static_dir = Application::getModuleUrl($this->getName()) . '/static';
-			$page->AddStylesheet("$static_dir/css/quizz.css");
-			$page->AddScript("$static_dir/js/quizz.js");
-						
-			return $smarty->fetch($template_path);*/
-        	
         	
         	$this->quizz_id = @(int)array_shift($params);        	
         	if (!$this->quizz_id) return $this->terminate();
@@ -90,7 +106,7 @@
         	
 			$smarty = Application::getSmarty();
 			$smarty->assign('quizz', $this->quizz);
-			$smarty->assign('page_content', $this->generateQuestionPage());
+			$smarty->assign('page_content', $this->generateUserInfoPage());
 			
 			$template_path = $this->getTemplatePath($this->action);						
 			return $smarty->fetch($template_path);        	
@@ -98,19 +114,68 @@
         
         
         protected function taskAjax($params=array()) {
-        	$this->restoreQuestions();
+        	$task = Request::get('task');
         	
-        	if (!isset($this->questions[$this->current_question])) die($this->generateErrorPage());        	
-        	        	
-        	$answer_id = (int)Request::get('answer_id');
-        	$this->questions[$this->current_question]->answer_id = $answer_id;
-        	$this->current_question++;
+        	switch ($task) {
+        		case 'answer':
+		        	$this->restoreQuestions();
+		        	
+		        	if (!isset($this->questions[$this->current_question])) die($this->generateErrorPage());        	
+		        	        	
+		        	$answer_id = (int)Request::get('answer_id');
+		        	$this->questions[$this->current_question]->answer_id = $answer_id;
+		        	$this->current_question++;
+		        	
+		        	$this->saveQuestions();
+		
+		        	if ($this->current_question >= count($this->questions)) die($this->generateResultPage());
+		        	
+		        	die($this->generateQuestionPage());
+		        			
+        			break;
+        			
+        		case 'user_info':
+        			
+        			$form_data = array(
+        				'name' => Request::get('name'),
+        				'age' => Request::get('age'),
+        				'school' => Request::get('school'),
+        				'grade' => Request::get('grade'),
+        				'phone' => Request::get('phone')
+        			);
+        			
+        			$form_errors = array();
+        			
+        			$mandatory_fields = array(
+        				'name' => 'ФИО',
+        				'age' => 'Возраст',
+        				'school' => 'Школа',
+        				'grade' => 'Класс',
+        				'phone' => 'Телефон'
+        			);
+        			
+        			
+        			
+        			foreach ($mandatory_fields as $fieldname => $fieldname_ru) {
+		        		if (!trim($form_data[$fieldname])) {
+        					$form_errors[$fieldname] = "Вы пропустили обязательное поле";
+        				}
+        			}
+        			
+        			
+        			if (!$form_errors) {
+        				$this->setUserInfo($form_data);
+	        			$this->restoreQuestions();
+	        			die($this->generateQuestionPage());
+        			}
+        			else {
+        				die($this->generateUserInfoPage($form_data, $form_errors));
+        			}
+        			
+        			
+        			break;
+        	}
         	
-        	$this->saveQuestions();
-
-        	if ($this->current_question >= count($this->questions)) die($this->generateResultPage());
-        	
-        	die($this->generateQuestionPage());
         	
         }
         
@@ -189,6 +254,21 @@
         	}
         }
         
+        
+        protected function generateUserInfoPage($form_data=array(), $form_errors) {
+        	$this->setUserInfo(null);
+        	$smarty = Application::getSmarty();        	
+        	
+        	$smarty->assign('question', $question);
+        	$smarty->assign('back_link', Application::getSeoUrl("/{$this->getName()}"));
+        	$smarty->assign('form_data', $form_data);
+        	$smarty->assign('form_errors', $form_errors);
+        	
+        	$template_path = $this->getTemplatePath('user_info');
+        	return $smarty->fetch($template_path);
+        	
+        	
+        }
         
         protected function generateQuestionPage() {
         	$smarty = Application::getSmarty();        	
