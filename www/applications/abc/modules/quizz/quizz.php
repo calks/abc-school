@@ -104,9 +104,18 @@
         	$this->resetQuestions();
         	$this->saveQuestions();
         	
+        			/*$form_data = array(
+        				'name' => 'Алена Андреева',
+        				'age' => '13',
+        				'school' => 'Школа №174',
+        				'grade' => '8',
+        				'phone' => '+79138558661'
+        			);*/
+        	
+        	
 			$smarty = Application::getSmarty();
 			$smarty->assign('quizz', $this->quizz);
-			$smarty->assign('page_content', $this->generateUserInfoPage());
+			$smarty->assign('page_content', $this->generateUserInfoPage($form_data));
 			
 			$template_path = $this->getTemplatePath($this->action);						
 			return $smarty->fetch($template_path);        	
@@ -166,6 +175,10 @@
         			if (!$form_errors) {
         				$this->setUserInfo($form_data);
 	        			$this->restoreQuestions();
+		        		
+	        			/*$this->current_question = 38;
+		        		$this->saveQuestions();*/
+	        			
 	        			die($this->generateQuestionPage());
         			}
         			else {
@@ -296,6 +309,8 @@
         
         
         protected function generateResultPage() {
+        	$this->sendTestResults();
+        	
         	$right_answers = 0;
         	foreach($this->questions as $question) {
         		foreach($question->answers as $answer) {
@@ -308,12 +323,64 @@
         	$smarty->assign('questions_total', count($this->questions));
         	$smarty->assign('back_link', Application::getSeoUrl("/{$this->getName()}"));
         	$smarty->assign('questions', $this->questions);
-        	
+        	        	
         	$template_path = $this->getTemplatePath('result');
         	return $smarty->fetch($template_path);
         	        	
         }
         
+        
+        protected function sendTestResults() {
+        	//error_reporting(E_ALL); ini_set('display_errors', 1);
+        	if (!$this->questions) return;
+        	
+        	$quizz_id = $this->questions[0]->quizz_id;        	
+        	        	
+        	$quizz = Application::getObjectInstance('quizz');
+        	$quizz = $quizz->load($quizz_id);
+        	
+        	
+        	$right_answers = 0;
+        	foreach($this->questions as $question) {
+        		foreach($question->answers as $answer) {
+        			if($answer->is_right && $answer->id == $question->answer_id) $right_answers++;
+        		}
+        	}
+        	
+        	$user_info = $this->getUserInfo();
+        	
+        	$smarty = Application::getSmarty();
+        	$smarty->assign('right_answers', $right_answers);
+        	$smarty->assign('questions_total', count($this->questions));
+        	$smarty->assign('back_link', Application::getSeoUrl("/{$this->getName()}"));
+        	$smarty->assign('questions', $this->questions);
+        	$smarty->assign('quizz', $quizz);
+        	$smarty->assign('user_info', $user_info);
+        	
+        	$template_path = $this->getTemplatePath('email');        	
+        	
+        	$body = $smarty->fetch($template_path);
+			$emails = array(
+				'alexey@cyberly.ru',
+				EMAIL_DESTINATION
+			);
+	
+			
+			$subject = "Результаты теста \"$quizz->name\", {$user_info['name']}";
+				
+			Application::loadLibrary('olmi/MailSender');
+			
+			foreach ($emails as $e) {
+				$msg = MailSender::createMessage();            
+				$msg->setSubject($subject);
+				$msg->setFrom('no-reply@abc-school.ru', 'Лингвоцентр ABC');
+				$msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
+				$msg->setBody($body, "text/html", "utf-8", "8bit");
+				$msg->addTo($e);
+				MailSender::send($msg);		
+			}
+        	
+        }
         
         
 
