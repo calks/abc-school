@@ -23,7 +23,7 @@
 				{$form->getValue('parent_name')}							
 			</p>
 			<p>
-				<b>Место работы</b>
+				<b>Дата рождения</b>
 				{$form->getValue('parent_birth_date')}							
 			</p>
 			
