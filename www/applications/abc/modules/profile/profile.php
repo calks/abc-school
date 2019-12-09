@@ -42,22 +42,44 @@
 				
 			
 			$this->attendance_from = Request::get('from');
-			if (preg_match('/^(\d)+\.(\d)+\.(\d)+$/', $this->attendance_from)) {
-				$this->attendance_from_mysql = preg_replace('/(\d+)\.(\d+)\.(\d+)/', '$3-$2-$1', $this->attendance_from);
-			}
-			else {
-				$this->attendance_from = date('d.m.Y', strtotime('-1 month'));				
-				$this->attendance_from_mysql = date('Y-m-d', strtotime('-1 month'));	
+			if(!preg_match('/^(\d)+\.(\d)+\.(\d)+$/', $this->attendance_from)) {
+				$this->attendance_from = null;
 			}
 			
 			$this->attendance_to = Request::get('to');
-			if (preg_match('/^(\d)+\.(\d)+\.(\d)+$/', $this->attendance_to)) {
-				$this->attendance_to_mysql = preg_replace('/(\d+)\.(\d+)\.(\d+)/', '$3-$2-$1', $this->attendance_to);
+			if(!preg_match('/^(\d)+\.(\d)+\.(\d)+$/', $this->attendance_to)) {
+				$this->attendance_to = null;
 			}
-			else {
-				$this->attendance_to = date('d.m.Y', strtotime('+1 month'));;
-				$this->attendance_to_mysql = date('Y-m-d', strtotime('+1 month'));;	
+			
+			
+			if (!$this->attendance_from) {
+				$current_year = date('Y');
+				$current_month = date('m');
+				$period_start_year = $current_month >=9 ? $current_year : $current_year-1;
+				$period_end_year = $period_start_year + 1;
+				
+				if($this->task == 'marks') {
+					$this->attendance_from = "01.09.$period_start_year";
+				}
+				else {
+					$this->attendance_from = date('d.m.Y', strtotime('-1 month'));
+				}
 			}
+			
+			
+			if (!$this->attendance_to) {
+				if($this->task == 'marks') {
+					$this->attendance_to = "30.06.$period_end_year";
+				}
+				else {
+					$this->attendance_to = date('d.m.Y', strtotime('+1 month'));	
+				}				
+			}
+			
+			
+			$this->attendance_from_mysql = preg_replace('/(\d+)\.(\d+)\.(\d+)/', '$3-$2-$1', $this->attendance_from);
+			$this->attendance_to_mysql = preg_replace('/(\d+)\.(\d+)\.(\d+)/', '$3-$2-$1', $this->attendance_to);
+			
 			
 			$smarty = Application::getSmarty();
 			
@@ -329,7 +351,7 @@
 					ORDER BY $table.starts_at
 				";						
 					
-						
+					//die($sql);	
 				$db = Application::getDb();
 				$data = $db->executeSelectAllObjects($sql);
 				foreach($data as $d) {
