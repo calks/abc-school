@@ -54,6 +54,12 @@
 			return in_array($role, array('admin', 'manager', 'teacher', 'director', 'student'));
 		}
 		
+		public static function canOpenClassworkTab() {
+			$role = self::getLoggedUserRole();
+			return in_array($role, array('admin', 'manager', 'teacher', 'director', 'student'));
+		}
+		
+		
 		public static function canOpenPaymentTab() {
 			$role = self::getLoggedUserRole();
 			return in_array($role, array('admin', 'teacher', 'director', 'student'));
@@ -90,6 +96,20 @@
 					return false;
 			}
 		}
+		
+		
+		public static function canEditClasswork() {
+			$role = self::getLoggedUserRole();
+			
+			switch ($role) {
+				case 'admin':
+				case 'teacher':
+					return true;	
+				default: 
+					return false;
+			}
+		}
+		
 		
 		
 		public static function canEditMarks() {

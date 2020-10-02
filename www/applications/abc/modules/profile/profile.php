@@ -128,6 +128,13 @@
 				);
 			}
 			
+			if(profileHelperLibrary::canOpenClassworkTab()) {
+				$items['class'] = array(
+					'name' => 'Материал урока',
+					'link' => Application::getSeoUrl("/{$this->getName()}/classwork")			
+				);
+			}
+			
 			if(profileHelperLibrary::canOpenHomeworkTab()) {
 				$items['homework'] = array(
 					'name' => 'Домашние задания',
@@ -322,6 +329,9 @@
 					case 'homework':
 						$entry_name = 'homework';
 						break;
+					case 'class':
+						$entry_name = 'classwork';
+						break;						
 					case 'marks':
 						$entry_name = 'user_marks';
 						break;
@@ -761,6 +771,41 @@
 		
 		
 		
+		protected function taskSave_classwork($params=array()) {
+			$entry_id = (int)Request::get('entry_id');
+			$entry_date = preg_replace('/^(\d+)\.(\d+)\.(\d+)$/', '$3-$2-$1', Request::get('entry_date'));
+			
+			$this->checkGroupRights($entry_id, $entry_date);
+			
+			$classwork = Application::getEntityInstance('classwork');
+			$classwork->id = $classwork->findId($entry_id, $entry_date);
+			
+			
+			$task = trim(Request::get('task'));
+			
+			if (!$task && $classwork->id) {
+				$classwork->delete();
+			} 
+			else {
+				$classwork->description = $task;
+				$classwork->schedule_entry_id = $entry_id;
+				$classwork->schedule_entry_date = $entry_date;
+				$classwork->save();
+			}
+			
+			$schedule = Application::getEntityInstance('user_group_schedule');
+			$entry = $schedule->load($entry_id);			
+			
+			die(json_encode(array(
+				'message' => 'Данные сохранены',
+				'chart' => $this->getClassworkChartHtml($entry->user_group_id)
+			)));
+			
+		}
+		
+		
+		
+		
 		protected function groupLogic() {
 			$smarty = Application::getSmarty();			
 			
@@ -1000,6 +1045,24 @@
 		}
 		
 		
+		protected function taskClasswork($params=array()) {
+			if (profileHelperLibrary::canEditGroupData()) {
+				$page = Application::getPage();
+				$page->addScript('/applications/abc/modules/profile/static/js/classwork.js');
+			}
+			
+			$this->groupLogic();
+			
+			$smarty = Application::getSmarty();
+			
+			if ($this->group_id) {				
+				$smarty->assign('chart', $this->getClassworkChartHtml($this->group_id));
+				$smarty->assign('group_schedule_day_numbers', $this->getGroupScheduleDayNumbers($this->group_id));
+			}
+		}
+		
+		
+		
 		
 		protected function taskPayment($params=array()) {
 			if (profileHelperLibrary::canEditPayment() || profileHelperLibrary::canEditGroupData()) {
@@ -1169,6 +1232,18 @@
 			return $smarty->fetch($this->getTemplatePath('homework_chart'));			
 		}
 		
+
+		protected function getClassworkChartHtml($group_id) {
+			$classwork = Application::getEntityInstance('classwork');
+			$classwork_data = $classwork->loadForGroup($group_id);
+						
+			$smarty = Application::getSmarty();
+			$smarty->assign('classwork_data', $classwork_data);
+			//$smarty->assign('can_edit', $this->user->role == 'teacher');
+			$smarty->assign('can_edit', profileHelperLibrary::canEditClasswork());
+			
+			return $smarty->fetch($this->getTemplatePath('classwork_chart'));			
+		}
 		
 		
 		protected function getGroupsForChart($branch_id, $teacher_id) {
