@@ -1,0 +1,15 @@
+.buildpath
+.project
+.settings/*
+access.log
+error.log
+misc/*
+www/photos/*
+www/temp/*
+www/files/*
+www/SQLyogTunnel.php
+www/applications/abc_admin/modules/auto_users/static/*
+www/old/*
+.hg/
+www/cron/error_log
+www/composer.lock
