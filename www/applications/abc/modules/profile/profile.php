@@ -1300,7 +1300,13 @@
 			
 			if ($this->user->role == 'teacher') {
 				$teacher_groups = implode(',', $this->user->group_id);
-				$params['where'][] = "$alias.id IN($teacher_groups)";
+				if ($teacher_groups) {
+					$params['where'][] = "$alias.id IN($teacher_groups)";	
+				}
+				else {
+					$params['where'][] = "0";
+				}
+				
 			}
 			
 			$group_list = $group->load_list($params);
