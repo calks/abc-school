@@ -83,6 +83,9 @@
 			$csv_in_dir = "$static_dir/in";
 			$csv_out_dir = "$static_dir/out";
 			
+			
+			$groups = array();
+			
 			$d = opendir($csv_in_dir);
 			while($file=readdir($d)) {
 				if (in_array($file, array('.', '..'))) continue;
@@ -137,7 +140,18 @@
 							$group_name = $row[0];
 							$group_name = preg_replace('/\s+/', ' ', $group_name);
 							$group_name = preg_replace('/\s,/', ',', $group_name);						
-							$group_id = $this->getGroupId($group_name, $branch_title);							
+							$group_id = $this->getGroupId($group_name, $branch_title);
+							
+							if (!isset($groups[$branch_title])) {
+								$groups[$branch_title] = array();
+							}							
+							if(in_array($group_name, $groups[$branch_title])) {
+								echo "<span style=\"color:red\">[$branch_title][$group_name] error: two groups with same name</span><br>"; die();								
+							}
+							
+							$groups[$branch_title][] = $group_name;
+								
+							
 							break;
 						case 'schedule':												
 							$schedule_data = $this->parseScheduleRow($row[0], $branch_title);
