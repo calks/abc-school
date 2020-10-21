@@ -329,7 +329,7 @@
 					case 'homework':
 						$entry_name = 'homework';
 						break;
-					case 'class':
+					case 'classwork':
 						$entry_name = 'classwork';
 						break;						
 					case 'marks':
