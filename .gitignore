@@ -13,3 +13,4 @@ www/old/*
 .hg/
 www/cron/error_log
 www/composer.lock
+db/
