@@ -4,6 +4,8 @@
 		<h1>Стать преподавателем</h1>
 		
 		
+		{if $errors.send}<div class="error-box">{$errors.send}</div>{/if}
+		
 		<form action="{$form_action}" method="post">			
 			
 			

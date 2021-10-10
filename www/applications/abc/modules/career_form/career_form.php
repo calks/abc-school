@@ -23,8 +23,13 @@
 				$this->form->LoadFromRequest($_REQUEST);
 				$this->validateForm();
 				if (!$this->errors) {
-					$this->sendForm();
-					Redirector::redirect("/career_form-thanks");	
+					$sent = $this->sendForm();
+					if (!$sent) {
+						$this->errors['send'] = "Не удалось отправить заявку";
+					}
+					else {
+						Redirector::redirect("/career_form-thanks");
+					}	
 				}
 			}
 						
@@ -120,7 +125,7 @@
             $msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
             $msg->setBody($message, "text/html", "utf-8", "8bit");
             $msg->addTo(EMAIL_DESTINATION);
-            MailSender::send($msg);
+            return MailSender::send($msg);
             
 		
 		}

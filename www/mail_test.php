@@ -2,17 +2,7 @@
 
 	error_reporting(E_ALL); ini_set('display_errors', 1);
 
-	include 'core/libraries/core/application.php';
-	
-	
-    Application::init('abc_admin');
-
-    Application::loadLibrary('misc');
-    Application::loadLibrary('core/dataobject');
-    Application::loadLibrary('core/debug');
-    Application::loadLibrary('page_properties_helper');
-    
-	Application::loadLibrary('olmi/MailSender');
+	require_once 'core/libraries/olmi/MailSender2.php';
 
 
 	$message = "
@@ -34,9 +24,5 @@
 	$msg->setReplyTo('no-reply@abc-school.ru', 'Лингвоцентр ABC');
 	$msg->setBody($message, "text/html", "utf-8", "8bit");
 	$msg->addTo('alexey@cyberly.ru');
-	$msg->addTo('test-l45ga@mail-tester.com');
-	
 	$sent = MailSender::send($msg);
 	var_dump($sent);
-	
-	//978fX543x0X6m9s

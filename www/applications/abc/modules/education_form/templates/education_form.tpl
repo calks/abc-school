@@ -10,6 +10,9 @@
 		</div>
 		
 		
+		{if $errors.send}<div class="error-box">{$errors.send}</div>{/if}
+		
+		
 		<form class="preschool{if $form_type!='preschool'} hidden{/if}" action="{$form_action}" method="post">
 			
 			<h2>Информация о ребенке</h2>

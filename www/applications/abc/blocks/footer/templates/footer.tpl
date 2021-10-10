@@ -1,6 +1,4 @@
-
-
-		<div class="footer">
+﻿	<div class="footer">
 			<div class="footer_shadow"></div>
 			
 			<div class="about">
@@ -19,7 +17,7 @@
 			</div>
 			
 			<div class="address">
-				г. Новосибирск, ул. Б.Богаткова 208/2, телефон: (383) 209-19-90
+				г. Новосибирск, ул. Б.Богаткова 208/2, телефоны: (383) 209-19-90, 8-913-912-1809
 			</div>
 			
 			<div class="copyright">

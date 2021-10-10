@@ -79,7 +79,7 @@
 	$footer = Application::getBlockContent('footer');
 	$smarty->assign('footer', $footer);
 	
-	$html_head = $page->getHtmlHead();
+	$html_head = $page->getHtmlHead('1.1');
 	$smarty->assign('html_head', $html_head);
 
 	$smarty->display('index.tpl');
