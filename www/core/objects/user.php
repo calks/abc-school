@@ -15,6 +15,7 @@
 		var $info;
 		var $is_hidden;
 		var $notes;
+		var $period_id;
 
 		function __construct() {
 			$this->group_id = array();
@@ -123,6 +124,13 @@
 		function save() {
 			$this->email = strtolower($this->email);
 			
+			if ($this->role == 'student') {
+				$this->period_id = CURRENT_PERIOD_ID;
+			}
+			else {
+				$this->period_id = null;
+			}			
+			
 			$user_id = parent::save();
 			
 			if ($user_id) {
@@ -146,6 +154,10 @@
 			$group_coupling_alias = $group->getTableAlias($group_coupling_table);
 			
 			
+			$period_id = CURRENT_PERIOD_ID;
+			$params['where'][] = "(`$alias`.`period_id` = $period_id OR `$alias`.`period_id` IS NULL)";       	
+			
+			
 			$params['from'][] = "
 				LEFT JOIN $group_coupling_table $group_coupling_alias ON $group_coupling_alias.user_id = $alias.id
 			";
@@ -156,7 +168,7 @@
 			
 			$params['fields'][] = "CONCAT($alias.lastname, ' ', $alias.firstname) AS user_name";
 						
-			$params['group_by'] = "$alias.id";
+			$params['group_by'] = "$alias.id";						
 			
 		}
 

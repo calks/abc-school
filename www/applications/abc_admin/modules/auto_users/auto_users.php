@@ -33,10 +33,13 @@
 			
 			$branch = Application::getEntityInstance('user_group_branch');
 			$branch_table = $branch->getTableName();
+			
+			$period_id = CURRENT_PERIOD_ID;
+			
 			$branch_id = $db->executeScalar("
 				SELECT id 
 				FROM $branch_table
-				WHERE title='$sbranch_title'
+				WHERE title='$sbranch_title' AND period_id=$period_id
 			");
 			if (!$branch_id){
 				$branch->title = $branch_title;
@@ -67,15 +70,17 @@
 		
 		protected function taskCreate() {
 			$db = Application::getDb();
+			$period_id = CURRENT_PERIOD_ID;
+			
 			$db->execute("
 				DELETE FROM user
-				WHERE role='student'
+				WHERE role='student' AND period_id=$period_id
 			");
 			$db->execute("
-				DELETE FROM user_group
+				DELETE FROM user_group WHERE period_id=$period_id
 			");
 			$db->execute("
-				DELETE FROM user_group_branch
+				DELETE FROM user_group_branch WHERE period_id=$period_id
 			");
 			
 			
@@ -272,6 +277,8 @@
 			
 			$day_regex = implode('|', $day_names);
 			$time_regex = "\d{1,2}(:|\.)\d{2}";
+			
+			$schedule_row = str_replace(',', ' ', $schedule_row);
 			
 			$same_begin_time_matched = preg_match("/(?P<day1>$day_regex)\-(?P<day2>$day_regex)\s+(?P<begins1>$time_regex)/isuU", $schedule_row, $same_time_matches);
 			$different_begin_time_matched = preg_match("/(?P<day1>$day_regex)\s+(?P<begins1>$time_regex)\s+(?P<day2>$day_regex)\s+(?P<begins2>$time_regex)/isuU", $schedule_row, $different_time_matches);

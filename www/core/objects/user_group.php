@@ -11,6 +11,7 @@
 		public $month_price;
 		public $month_price_comment;
 		public $is_hidden;
+		public $period_id;
 		
 		protected static $internal_branch_full_list;
 		
@@ -132,6 +133,13 @@
         }        
         
         public function load_list($params=array()) {
+        	
+			$period_id = CURRENT_PERIOD_ID;
+			$table = $this->getTableName();
+			$table_alias = $this->getTableAlias($table);
+			$params['where'][] = "`$table_alias`.`period_id` = $period_id";
+        	
+        	
         	$list = parent::load_list($params);
         	
         	$branches = $this->getBranchSelect();
@@ -157,6 +165,10 @@
 			if ($this->education_starts) {
 				$this->education_starts = preg_replace('/(\d+)\.(\d+)\.(\d+)/', '$3-$2-$1', $this->education_starts); 	
 			}
+			
+			if (!$this->period_id) {
+				$this->period_id = CURRENT_PERIOD_ID;				
+			}			
 			
 			$group_id = parent::save();
 			
