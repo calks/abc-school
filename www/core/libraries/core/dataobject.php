@@ -234,8 +234,12 @@
             SELECT $fields
             FROM $from
             $where $group_by $having $order_by $limit_offset";
+            
+            
+            if (isset($params['show_sql']) && $params['show_sql']) {
+				echo '<pre>' . $sql."</pre>\n\n";            	
+            }
 
-//echo '<pre>' . $sql."</pre>\n\n";die();
 
             $raw_list = $db->executeSelectAllObjects($sql);
             if (!$raw_list) {

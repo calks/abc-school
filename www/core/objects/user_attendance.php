@@ -20,6 +20,7 @@
 			
 						
 			$db = Application::getDb();
+			$period_id = CURRENT_PERIOD_ID;
 			$sql = "
 				SELECT 
 					$user_table.id AS user_id,
@@ -31,7 +32,8 @@
 				WHERE 
 					$user_coupling_table.group_id=$group_id AND
 					$user_table.role='student' AND
-					$user_table.active=1 
+					$user_table.active=1 AND
+					$user_table.period_id = $period_id
 				ORDER BY user_name	
 			";
 					

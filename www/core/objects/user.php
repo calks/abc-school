@@ -84,10 +84,15 @@
 			$db = Application::getDb();
 			$table = $this->getTableName();
 						
+			
+			$period_id = CURRENT_PERIOD_ID;
+			
+			
 			$found = (int)$db->executeScalar("
 				SELECT COUNT(*)
 				FROM $table
 				WHERE 
+					period_id = $period_id AND
 					email = '$email' AND
 					id != $id
 			");
@@ -201,9 +206,11 @@
 			$db = Application::getDb();
 			$email = addslashes($email);
 			
+			$period_id = CURRENT_PERIOD_ID; 
+			
 			return $db->executeScalar("
 				SELECT id FROM $table
-				WHERE email = '$email'
+				WHERE email = '$email' AND period_id=$period_id
 			");
 			
 		}

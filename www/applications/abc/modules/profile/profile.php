@@ -265,11 +265,12 @@
 			if (!$email) return true;
 						
 			$email = addslashes($email);
+			$period_id = CURRENT_PERIOD_ID;
 
 			$sql = "
 				SELECT COUNT(*)
 				FROM $table
-				WHERE email='$email' AND id!=$id
+				WHERE email='$email' AND id!=$id AND period_id=$period_id
 			";
 			
 			return !(bool)$db->executeScalar($sql);
@@ -1309,7 +1310,7 @@
 				
 			}
 			
-			$group_list = $group->load_list($params);
+			$group_list = $group->load_list($params);			
 			return $group_list;
 		
 		}
@@ -1336,7 +1337,7 @@
 				
 				return $out;			
 			}
-
+//die();
 			
 			$attendance = Application::getEntityInstance('user_attendance');
 			$attendance_data = $attendance->loadForGroup($group_id, $this->attendance_from_mysql, $this->attendance_to_mysql, (bool)Request::get('absent_twice_in_a_row_only'));			
