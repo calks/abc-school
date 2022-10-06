@@ -282,6 +282,7 @@
 			
 			$same_begin_time_matched = preg_match("/(?P<day1>$day_regex)\-(?P<day2>$day_regex)\s+(?P<begins1>$time_regex)/isuU", $schedule_row, $same_time_matches);
 			$different_begin_time_matched = preg_match("/(?P<day1>$day_regex)\s+(?P<begins1>$time_regex)\s+(?P<day2>$day_regex)\s+(?P<begins2>$time_regex)/isuU", $schedule_row, $different_time_matches);
+			$different_begin_end_time_matched = !$different_begin_time_matched && preg_match("/(?P<day1>$day_regex)\s+(?P<begins1>$time_regex)\s*\-\s*(?P<ends1>$time_regex)\s+(?P<day2>$day_regex)\s+(?P<begins2>$time_regex)\s*\-\s*(?P<ends2>$time_regex)/isuU", $schedule_row, $different_time_matches);
 			
 			$day1_name = isset($same_time_matches['day1']) ? $same_time_matches['day1'] : null;
 			$day2_name = isset($same_time_matches['day2']) ? $same_time_matches['day2'] : null;
@@ -294,11 +295,11 @@
 			
 			$schedule = array();
 			
-			if ($same_begin_time_matched) {
+			if ($same_begin_time_matched) {				
 				$schedule[$day1_number] = $begins1;
 				$schedule[$day2_number] = $begins1;
 			}
-			elseif($different_begin_time_matched) {
+			elseif($different_begin_time_matched || $different_begin_end_time_matched) {
 				$schedule[$day1_number] = $begins1;
 				$schedule[$day2_number] = $begins2;
 			}
