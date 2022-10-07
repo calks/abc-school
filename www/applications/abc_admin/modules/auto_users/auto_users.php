@@ -74,7 +74,7 @@
 			
 			$db->execute("
 				DELETE FROM user
-				WHERE role='student' AND period_id=$period_id
+				WHERE role='student' AND (period_id=$period_id OR period_id IS NULL)
 			");
 			$db->execute("
 				DELETE FROM user_group WHERE period_id=$period_id
@@ -192,7 +192,8 @@
 							$name = explode(' ', $name);
 							$lastname = addslashes(array_shift($name));
 							$firstname = addslashes(implode(' ', $name));
-							$values[] = "('$login', '$pass', '$firstname', '$lastname', '$role', '$cell_phone')";
+							$period_id = CURRENT_PERIOD_ID;
+							$values[] = "('$login', '$pass', '$firstname', '$lastname', '$role', '$cell_phone', '$period_id')";
 							
 							$out_row = array();
 							$out_row[] = iconv('utf-8', 'cp1251', "$firstname $lastname");							
@@ -228,7 +229,7 @@
 				foreach ($chunks as $c) {
 					$c = implode(',', $c);
 					$sql = "
-						INSERT INTO user (login, pass, firstname, lastname, role, cell_phone) VALUES $c
+						INSERT INTO user (login, pass, firstname, lastname, role, cell_phone, period_id) VALUES $c
 					";
 					//echo $sql;
 					$db->execute($sql);
