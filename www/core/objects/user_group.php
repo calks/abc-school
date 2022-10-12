@@ -232,13 +232,17 @@
 			$coupling_table = $this->getCouplingTableName();
 			$table = $this->getTableName();
 			
+			$period_id = CURRENT_PERIOD_ID;
+			
 			$coupling_data = $db->executeSelectAllObjects("
 				SELECT 
 					$coupling_table.group_id,
 					$coupling_table.user_id,
 					$table.title AS group_title
 				FROM $coupling_table LEFT JOIN $table ON $table.id = $coupling_table.group_id
-				WHERE $coupling_table.user_id IN($user_ids)
+				WHERE 
+					$coupling_table.user_id IN($user_ids) AND
+					$table.period_id=$period_id
 			");
 					
 			foreach($coupling_data as $item) {
