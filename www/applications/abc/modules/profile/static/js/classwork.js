@@ -213,7 +213,7 @@
 						dateFormat: 'dd.mm.yy',
 						changeMonth: true,
 						changeYear: true,
-						yearRange: (yyyy-1) + ':' + yyyy,
+						yearRange: (today.getMonth() < 9 ? yyyy-1 : yyyy) + ':' + (today.getMonth() >= 9 ? yyyy+1 : yyyy),
 						beforeShowDay: function(date) {
 							var weekday_number = date.getDay();
 							if (weekday_number == 0) {

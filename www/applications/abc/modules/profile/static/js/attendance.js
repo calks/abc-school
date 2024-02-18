@@ -281,7 +281,7 @@
 			
 			function showDateDialog(col_number) {
 				var date_dialog = $('<div />').addClass('attendance-entry-select').appendTo('body');
-							
+						
 				$('<label />').html('Дата ').appendTo(date_dialog);
 							
 				var today = new Date();
@@ -361,7 +361,7 @@
 					close: function(){
 						date_dialog.remove();					
 					},
-					open: function(){
+					open: function(){						
 						date_select.datepicker({
 							dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
 							monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
@@ -370,7 +370,7 @@
 							dateFormat: 'dd.mm.yy',
 							changeMonth: true,
 							changeYear: true,
-							yearRange: (yyyy-1) + ':' + yyyy,
+							yearRange: (today.getMonth() < 9 ? yyyy-1 : yyyy) + ':' + (today.getMonth() >= 9 ? yyyy+1 : yyyy),
 							beforeShowDay: function(date) {
 								var weekday_number = date.getDay();
 								if (weekday_number == 0) {

@@ -12,8 +12,8 @@
 			{$footer_menu}
 
 			<div class="cyberly">							
-	    		<a href="http://cyberly.ru" target="_blank">Разработка сайта</a>:
-	    		<a href="http://cyberly.ru" target="_blank">Сайберли</a>
+	    		<a href="https://cyberly.ru" target="_blank">Разработка сайта</a>:
+	    		<a href="https://cyberly.ru" target="_blank">Сайберли</a>
 			</div>
 			
 			<div class="address">
