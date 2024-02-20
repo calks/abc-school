@@ -32,4 +32,12 @@
     
     define('EMAIL_DESTINATION', 'school.abc@mail.ru');
     
+    if($_SERVER['SERVER_PORT'] == 443) {
+    	define('SITE_PROTOCOL', 'https');
+    } 
+    else {
+      define('SITE_PROTOCOL', 'http');
+    }
+
+    
     require_once 'mail.php';

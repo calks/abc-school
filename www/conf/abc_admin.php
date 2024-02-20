@@ -30,6 +30,13 @@
     define("STATIC_PATH", Application::getSitePath() . '/applications/' . Application::getApplicationName() . '/static/' );
     define("STATIC_IMG_PATH", STATIC_PATH . 'img/' );
     
+    if($_SERVER['SERVER_PORT'] == 443) {
+    	define('SITE_PROTOCOL', 'https');
+    } 
+    else {
+      define('SITE_PROTOCOL', 'http');
+    }
+    
     
     require_once 'mail.php';
     require_once 'period.php';

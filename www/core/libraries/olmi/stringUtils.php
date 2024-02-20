@@ -48,7 +48,7 @@ class StringUtils {
 	public static function urlDocument( $url )
 	{
 		Application :: loadLibrary( 'seo/rewrite' );
-		if( preg_match( "/^http:\/\//i", $url ) )
+		if( preg_match( "/^https?:\/\//i", $url ) )
 			$result = $url;
 		else
 		{

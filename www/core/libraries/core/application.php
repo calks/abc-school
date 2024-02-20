@@ -26,6 +26,12 @@
 		private static $mobile;
 
 		public static function init($application_name) {
+			
+			$config_path = self::$site_path."/conf/$application_name.php";
+			include_once $config_path;
+			self::$config = $config;
+			
+			
 			self::$application_name = $application_name;
 			self::$site_path = realpath(dirname(__FILE__)."/../../..");
 
@@ -36,7 +42,7 @@
 				self::$host = "";
 			}
 
-			self::$site_url = 'http://'.self::$host;
+			self::$site_url = SITE_PROTOCOL . '://'.self::$host;
 
 			self::$db = null;
 			self::$breadcrumbs = null;
@@ -59,9 +65,6 @@
 
 			self::$mobile = (int) ((bool) (self::detectMobileBrowser()));
 
-			$config_path = self::$site_path."/conf/$application_name.php";
-			include_once $config_path;
-			self::$config = $config;
 
 			session_start();
 		}

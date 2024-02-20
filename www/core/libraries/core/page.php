@@ -96,7 +96,7 @@
 
         public function addStylesheet($source) {
         	//$source = Application :: getSitePath() . $source;        	
-        	if (substr($source, 0, 7) == 'http://') {
+        	if (substr($source, 0, 7) == 'http://' || substr($source, 0, 8) == 'https://') {
         		if(!in_array($source, $this->_stylesheets)) $this->_stylesheets[] = $source;
         		return $this;
         	}
