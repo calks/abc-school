@@ -125,7 +125,7 @@
 		}
 		
 		
-		public static function canEditStudentNotes($group_id) {
+		public static function canEditStudentNotes() {
 			$role = self::getLoggedUserRole();
 			
 			switch ($role) {

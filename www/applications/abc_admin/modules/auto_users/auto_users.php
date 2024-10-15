@@ -124,16 +124,18 @@
 					$row[0] = trim($row[0]);
 					if(!$row[0]) continue;
 					
-					
 					if (strpos($row[0], 'Расписание') !== false) {
 						$row_type = 'schedule';
 						$row_type_str = 'расписание';
 					}
-					elseif(preg_match('/[0-9a-z]+/', $row[0])) {
+					elseif(preg_match('/[0-9a-z]+/', $row[0]) && !preg_match('/^[0-9a-z]+$/', $row[0])) {
 						$row_type = 'group_name';
 						$row_type_str = 'группа';
 					}
 					else {
+						if (preg_match('/[0-9]+/', $row[0]) && $row[1]) {
+							$row[0] = $row[1];
+						}						
 						$row_type = 'student';
 						$row_type_str = 'студент';
 					}
@@ -262,7 +264,8 @@
 		
 		protected function parseScheduleRow($schedule_row, $branch_title) {
 			$schedule_row = mb_strtolower($schedule_row, 'utf-8');
-			$schedule_row = str_replace('расписание', '', $schedule_row);						
+			$schedule_row = str_replace('расписание', '', $schedule_row);
+			$schedule_row = trim($schedule_row, ': ');
 			
 			$day_names = array(
 				1 => 'понедельник',
@@ -281,7 +284,7 @@
 			
 			$schedule_row = str_replace(',', ' ', $schedule_row);
 			
-			$same_begin_time_matched = preg_match("/(?P<day1>$day_regex)\-(?P<day2>$day_regex)\s+(?P<begins1>$time_regex)/isuU", $schedule_row, $same_time_matches);
+			$same_begin_time_matched = preg_match("/(?P<day1>$day_regex)\-|\/(?P<day2>$day_regex)\s+(?P<begins1>$time_regex)/isuU", $schedule_row, $same_time_matches);
 			$different_begin_time_matched = preg_match("/(?P<day1>$day_regex)\s+(?P<begins1>$time_regex)\s+(?P<day2>$day_regex)\s+(?P<begins2>$time_regex)/isuU", $schedule_row, $different_time_matches);
 			$different_begin_end_time_matched = !$different_begin_time_matched && preg_match("/(?P<day1>$day_regex)\s+(?P<begins1>$time_regex)\s*\-\s*(?P<ends1>$time_regex)\s+(?P<day2>$day_regex)\s+(?P<begins2>$time_regex)\s*\-\s*(?P<ends2>$time_regex)/isuU", $schedule_row, $different_time_matches);
 			

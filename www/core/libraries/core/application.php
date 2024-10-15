@@ -26,14 +26,14 @@
 		private static $mobile;
 
 		public static function init($application_name) {
+
+			self::$application_name = $application_name;
+			self::$site_path = realpath(dirname(__FILE__)."/../../..");
+			
 			
 			$config_path = self::$site_path."/conf/$application_name.php";
 			include_once $config_path;
 			self::$config = $config;
-			
-			
-			self::$application_name = $application_name;
-			self::$site_path = realpath(dirname(__FILE__)."/../../..");
 
 
 			if (isset($_SERVER['HTTP_HOST'])) {
