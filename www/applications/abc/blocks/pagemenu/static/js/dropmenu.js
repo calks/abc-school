@@ -18,6 +18,8 @@ $.fn.dropmenu = function(user_options) {
     	
 
         var list = $(container).children('ul.dropmenu');
+        
+        
         if (list.length == 0) return null;
 
         list.remove();
@@ -123,11 +125,15 @@ $.fn.dropmenu = function(user_options) {
         }).mouseout(function(){
             shedule_hide(this);
         });
+    	
     }
 
 
     return this.each(function() {
         if (options) $.extend(options, user_options);
+        
+        
+        console.log($(this).children('li'));
 
         $(this).children('li').each(function(){
             init_li(this);

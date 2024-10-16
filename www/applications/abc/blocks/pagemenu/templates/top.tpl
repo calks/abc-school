@@ -12,9 +12,22 @@
                             <ul class="dropmenu">
                                 {foreach item=sub_item from=$item->children}
                                     <li>
-                                        <a href="{$sub_item->link}" {if $sub_item->open_new_window} target="_blank"{/if}>
+                                        <a {if $sub_item->children} class="section" href="" onclick="return false"{else}href="{$sub_item->link}"{/if} {if $sub_item->open_new_window} target="_blank"{/if}>
                                             {$sub_item->title|@mb_strtolower:"utf8"}
                                         </a>
+                                        
+				                        {if $sub_item->children}
+				                            <ul class="dropmenu_sub">
+				                                {foreach item=sub_sub_item from=$sub_item->children}
+				                                    <li>
+				                                        <a href="{$sub_sub_item->link}" {if $sub_sub_item->open_new_window} target="_blank"{/if}>
+				                                            <span>{$sub_sub_item->title|@mb_strtolower:"utf8"}</span>
+				                                        </a>
+				                                    </li>
+				                                {/foreach}
+				                            </ul>
+				                        {/if}						
+
                                     </li>
                                 {/foreach}
                             </ul>
@@ -31,6 +44,8 @@
 				        $('.header_menu').dropmenu({	            
 				            fade_speed: 200
 				        });
+			        
+
 				    });
 			
 				</script>

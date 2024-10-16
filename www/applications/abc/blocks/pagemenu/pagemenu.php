@@ -6,10 +6,14 @@
 
         public function run($params=array()) {            
         	$menu_type = @$params['type'];
-            if (!$menu_type) $menu_type = 'top';            
+            if (!$menu_type) $menu_type = 'top';
+            
+            
             $template_path = $this->getTemplatePath($menu_type);	
             if (!is_file($template_path)) return '';
-            $data = $this->getMenu($menu_type);
+            
+            $depth = $menu_type=='top' ? 3 : 1;
+            $data = $this->getMenu($menu_type, 0, CURRENT_LANGUAGE, $depth);
                         
             $smarty = Application::getSmarty();
             $smarty->assign('menu', $data);
@@ -23,7 +27,7 @@
 
         }
 
-        protected function getMenu($type, $parent_id=0, $language_id=CURRENT_LANGUAGE){
+        protected function getMenu($type, $parent_id=0, $language_id=CURRENT_LANGUAGE, $depth=1){
         	
             $db = Application::getDb();
 
@@ -57,6 +61,7 @@
                 GROUP BY document_id ORDER BY seq ASC
             ";
             
+            
             $objects_raw = $db->executeSelectAllObjects($query);
             $objects = array();
             $id_s = array();
@@ -67,8 +72,8 @@
             }
 
 
-            if (!$parent_id) {
-                $children = $this->getMenu($type, $id_s);
+            if ($depth > 1) {
+                $children = $this->getMenu($type, $id_s, $language_id, $depth-1);
 
                 foreach ($children as $child) {
                     $objects[$child->parent_id]->children[] = $child;
@@ -90,7 +95,7 @@
 
                 }
             }
-
+            
             return $objects;
         }
 

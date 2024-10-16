@@ -49,11 +49,11 @@
 
 .header_menu .dropmenu li {
 	display: block;
-	padding: 0 10px;
+	padding: 0;
 }
 	
 .header_menu .dropmenu a {	
-	padding: 7px 10px;	
+	padding: 7px 20px;	
 	background: none;
 	text-align: left;	
 	border-bottom: 1px solid #ebd8c3;
@@ -63,12 +63,13 @@
 	border: none;
 }	
 
-.header_menu .dropmenu li:hover {
+.header_menu .dropmenu li:hover > a {
 	background: #FDD5AA;
 }
 
 ._dropmenu .background,
-.header_menu .dropmenu li.last:hover {
+.header_menu .dropmenu li.last:hover,
+.header_menu .dropmenu li.last:hover a {
 	border-bottom-left-radius: 10px; 
 	border-bottom-right-radius: 10px;
 }
@@ -108,7 +109,13 @@
 }
 
 
+.header_menu .dropmenu .dropmenu_sub a span {
+	padding: 0 0 0 30px;
+}
 
+.header_menu a.section {
+	cursor: default;
+}
 
 
 
