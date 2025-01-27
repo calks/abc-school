@@ -542,11 +542,6 @@ body {
 }
 
 
-.header_menu,
-.header_menu * {
-	z-index: 999;
-}
-
 .block.indexpics img {
 	display: none;
 	position: absolute;	

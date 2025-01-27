@@ -17,11 +17,11 @@
                                         </a>
                                         
 				                        {if $sub_item->children}
-				                            <ul class="dropmenu_sub">
+				                            <ul class="dropmenu">
 				                                {foreach item=sub_sub_item from=$sub_item->children}
 				                                    <li>
 				                                        <a href="{$sub_sub_item->link}" {if $sub_sub_item->open_new_window} target="_blank"{/if}>
-				                                            <span>{$sub_sub_item->title|@mb_strtolower:"utf8"}</span>
+				                                            {$sub_sub_item->title|@mb_strtolower:"utf8"}
 				                                        </a>
 				                                    </li>
 				                                {/foreach}
@@ -37,17 +37,4 @@
 			
 			</ul>
 
-
-			{literal}
-				<script type="text/javascript">
-				    jQuery(document).ready(function(){
-				        $('.header_menu').dropmenu({	            
-				            fade_speed: 200
-				        });
-			        
-
-				    });
-			
-				</script>
-			{/literal}
 

@@ -95,7 +95,18 @@
 
 
         public function addStylesheet($source) {
-        	//$source = Application :: getSitePath() . $source;        	
+        	//$source = Application :: getSitePath() . $source;
+        	
+        	$qpos = strpos($source, '?');
+        	if ($qpos) {
+        		$ver = substr($source, $qpos);
+        		$source = substr($source, 0, $qpos);
+        	}
+        	else {
+        		$ver = null;
+        	}
+        	
+        	
         	if (substr($source, 0, 7) == 'http://' || substr($source, 0, 8) == 'https://') {
         		if(!in_array($source, $this->_stylesheets)) $this->_stylesheets[] = $source;
         		return $this;
@@ -107,7 +118,7 @@
         	}	        		
         	if(is_file($source)) {        		
 				$source = str_replace( Application :: getSitePath(), '', $source );
-				if(!in_array($source, $this->_stylesheets)) $this->_stylesheets[] = $source;				
+				if(!in_array($source, $this->_stylesheets)) $this->_stylesheets[] = $source . $ver;				
         	}
         	
             return $this;
