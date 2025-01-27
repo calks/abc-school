@@ -24,7 +24,7 @@
 		'content' => 'text/html; charset=UTF-8'
 	));
 		
-	$page->addStylesheet('style.css');
+	$page->addStylesheet('style.css?v=1.1');
 	$page->addStylesheet('text.css');
 	
 	
