@@ -20,7 +20,7 @@
             
             $page = Application::getPage();
             $static_dir = Application::getBlockUrl($this->getName()) . '/static';
-            $page->addStylesheet("$static_dir/css/pagemenu.css");
+            $page->addStylesheet("$static_dir/css/pagemenu.css?v=1.1");
             $page->addScript("$static_dir/js/dropmenu.js");
 
             return $smarty->fetch($template_path);
