@@ -19,8 +19,8 @@
 			
 			$static_dir = Application::getModuleUrl($this->getName()) . '/static';			
 			$page = Application::getPage();			
-			$page->AddScript("$static_dir/js/nalog.js");
-			$page->AddStylesheet("$static_dir/css/nalog.css");
+			$page->AddScript("$static_dir/js/nalog.js?v=1.1");
+			$page->AddStylesheet("$static_dir/css/nalog.css?v=1.1");
 			
 			
 			$education_periods_options =  $this->getEducatiomPeriods();
@@ -41,17 +41,43 @@
 			if (Request::isPostMethod()) {
 				$form->LoadFromRequest($_REQUEST);
 				
-				$child_name = trim($form->getValue('child_name'));
-				if (!$child_name) {
-					$this->errors['child_name'] = "Вы не ввели ФИО ребенка";
+				
+				$required_edit = array(
+					'parent_name',
+					'parent_inn',
+					'parent_birth_date',
+					'parent_document_series',
+					'parent_document_number',
+					'parent_document_issue_date',
+					'parent_document_issued_by',
+					'parent_phone',
+					'child_name',
+					'child_birth_date',
+					'child_document_series',
+					'child_document_number',
+					'child_document_issue_date'
+				);
+				
+				if ($form->getValue('child_document_type') == 'passport') {
+					$required_edit[] = 'child_document_issued_by';
 				}
 				
-				
-				$parent_name = trim($form->getValue('parent_name'));
-				if (!$parent_name) {
-					$this->errors['parent_name'] = "Вы не ввели ФИО родителя";
+				if ($form->getValue('delivery_type') == 'by_email') {
+					$required_edit[] = 'delivery_email';
 				}
+								
 				
+				$required_select = array(
+					'child_document_type',
+					'delivery_type'
+				);
+				
+				$required_checkbox = array(
+					'data_process_confirmation',
+					'data_validity_confirmation'
+				);
+				
+					
 				$education_periods = array();
 				$years_posted = isset($_POST['education_periods']['start_year']) ? $_POST['education_periods']['start_year'] : array(); 
 				$comments_posted = isset($_POST['education_periods']['comment']) ? $_POST['education_periods']['comment'] : array();
@@ -73,6 +99,27 @@
 					$this->errors['education_period'] = 'Добавьте хотя бы один период обучения';
 				}
 				
+				
+				foreach ($required_edit as $fieldname) {
+					if (!trim($form->getValue($fieldname))) {
+						$this->errors[$fieldname] = 'Необходимо заполнить поле';
+					}
+				}
+				
+				foreach ($required_select as $fieldname) {
+					if (!$form->getValue($fieldname)) {
+						$this->errors[$fieldname] = 'Необходимо выбрать вариант';
+					}
+				}
+				
+				foreach ($required_checkbox as $fieldname) {
+					if (!$form->getValue($fieldname)) {
+						$this->errors[$fieldname] = 'Необходимо подтвердить согласие';
+					}
+				}
+				
+				
+				
 				$attachments = $this->loadAttachments();
 				
 				
@@ -91,6 +138,9 @@
 		            $message = $smarty->fetch($template_path);
 		            
 		            
+		            //die($message);
+		            
+		            
 		            $msg = MailSender::createMessage();
 		            
 		            $msg->setSubject("abc-school.ru: заявка на оформление налогового вычета");
@@ -103,7 +153,7 @@
 		            	$msg->addAttachment($a);
 		            }
 		            
-		            $msg->addTo(EMAIL_DESTINATION);
+		            //$msg->addTo(EMAIL_DESTINATION);
 		            $msg->addTo('alexey@cyberly.ru');
 		            
 		            $sent = MailSender::send($msg);
@@ -122,7 +172,8 @@
 				}
 			}
 					
-						
+
+			
 			$smarty = Application::getSmarty();
 			$smarty->assign('form', $form);
 			$smarty->assign('captcha', $this->captcha);
@@ -145,15 +196,37 @@
 			Application::loadLibrary('olmi/form');
 			
 			$form = new BaseForm();
+
+			
+			$form->addField(new TEditField('parent_name', '', 100, 255));
+			$form->addField(new TEditField('parent_inn', '', 12, 12));
+			$form->addField(new TEditField('parent_birth_date', '', 30, 30));
+			$form->addField(new TEditField('parent_document_series', '', 30, 30));
+			$form->addField(new TEditField('parent_document_number', '', 30, 30));
+			$form->addField(new TEditField('parent_document_issue_date', '', 30, 30));
+			$form->addField(new TEditField('parent_document_issued_by', '', 30, 30));
+			$form->addField(new TEditField('parent_phone', '', 30, 30));
+
 			
 			$form->addField(new TEditField('child_name', '', 100, 255));
+			$form->addField(new TEditField('child_inn', '', 12, 12));
 			$form->addField(new TEditField('child_birth_date', '', 30, 30));
-			$form->addField(new TEditField('parent_name', '', 100, 255));
-			$form->addField(new TEditField('parent_birth_date', '', 30, 30));
+			$form->addField(new TSelectField('child_document_type', null, $this->getDocumentTypeSelect('-- Выберите --')));
+			$form->addField(new TEditField('child_document_series', '', 30, 30));
+			$form->addField(new TEditField('child_document_number', '', 30, 30));
+			$form->addField(new TEditField('child_document_issue_date', '', 30, 30));
+			$form->addField(new TEditField('child_document_issued_by', '', 30, 30));
+			
+			
+			$form->addField(new TSelectField('delivery_type', null, $this->getDeliveryTypeSelect('-- Выберите --')));
+			$form->addField(new TEditField('delivery_email', '', 30, 30));
+			$form->addField(new TCheckboxField('data_process_confirmation', false));
+			$form->addField(new TCheckboxField('data_validity_confirmation', false));
+			
 			
 			$form->addField(new TRadioField('contracts_available_yn', '', array(
-				'Да' => 'Да',
-				'Нет' => 'Нет'
+				'y' => 'Да',
+				'n' => 'Нет'
 			)));
 			
 			return $form;
@@ -161,11 +234,33 @@
 		
 		
 		
-			protected function getEducatiomPeriods() {
-			$start_year = 2016;
+		
+		protected function getDocumentTypeSelect($null_item=null) {
+			$out = $null_item ? array(null => $null_item) : array();
+			
+			$out['passport'] = 'Паспорт';
+			$out['birth_certificate'] = 'Свидетельство о рождении';
+			
+			return $out;
+		}
+		
+		
+		protected function getDeliveryTypeSelect($null_item=null) {
+			$out = $null_item ? array(null => $null_item) : array();
+			
+			$out['by_email'] = 'На адрес электронной почты';
+			$out['in_person'] = 'Лично';
+			
+			return $out;
+		}
+		
+		
+		
+		protected function getEducatiomPeriods($null_item=null) {
+			$start_year = date('Y') - 3;
 			$end_year = date('j')>6 ? date('Y') : date('Y')-1;
 			
-			$out = array();
+			$out = $null_item ? array(null => $null_item) : array();
 			for ($y1=$start_year; $y1<=$end_year; $y1++) {
 				$y2 = $y1+1;
 				$out[$y1] = "$y1 - $y2";

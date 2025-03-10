@@ -36,32 +36,93 @@
 			{/if}
 			
 			
-			<form class="" action="{$form_action}" method="post" enctype="multipart/form-data">
-				
-				<h2>Информация о ребенке</h2>
+			<form action="{$form_action}" method="post" enctype="multipart/form-data">
+
+
+				<h2>Данные плательщика</h2>
 				<div class="full_width">
-					{if $errors.child_name}<div class="error kids_name">{$errors.child_name}</div>{/if}
-					<label>ФИО *</label>
-					{$form->render('child_name')}
+					{if $errors.parent_name}<div class="error">{$errors.parent_name}</div>{/if}
+					<label>ФИО&nbsp;*</label>
+					{$form->render('parent_name')}				
 				</div>				
-				{if $errors.child_age}<div class="error age">{$errors.child_age}</div>{/if}
-				<div class="row">			
-					<label>Дата рождения</label>
+				<div class="row">
+					{if $errors.parent_inn}<div class="error">{$errors.parent_inn}</div>{/if}
+					<label>ИНН&nbsp;*</label>					
+					{$form->render('parent_inn')}				
+				</div>
+				{if $errors.parent_birth_date}<div class="error">{$errors.parent_birth_date}</div>{/if}				
+				<div class="row">
+					<label>Дата рождения&nbsp;*</label>
+					{$form->render('parent_birth_date')}				
+				</div>				
+				<div class="row">
+					{if $errors.parent_document_series}<div class="error">{$errors.parent_document_series}</div>{/if}
+					<label>Серия паспорта&nbsp;*</label>
+					{$form->render('parent_document_series')}  				
+				</div>
+				<div class="row">
+					{if $errors.parent_document_number}<div class="error">{$errors.parent_document_number}</div>{/if}
+					<label>Номер паспорта&nbsp;*</label>
+					{$form->render('parent_document_number')}  				
+				</div>
+				<div class="row">
+					{if $errors.parent_document_issue_date}<div class="error">{$errors.parent_document_issue_date}</div>{/if}
+					<label>Дата выдачи паспорта&nbsp;*</label>
+					{$form->render('parent_document_issue_date')}  				
+				</div>
+				<div class="row">
+					{if $errors.parent_document_issued_by}<div class="error">{$errors.parent_document_issued_by}</div>{/if}
+					<label>Код подразделения&nbsp;*</label>
+					{$form->render('parent_document_issued_by')}  				
+				</div>				
+				<div class="row">
+					{if $errors.parent_phone}<div class="error">{$errors.parent_phone}</div>{/if}
+					<label>Контактный телефон&nbsp;*</label>
+					{$form->render('parent_phone')}				
+				</div>
+
+				<h2>Данные обучающегося, которому оказаны образовательные услуги</h2>
+				<div class="full_width">
+					{if $errors.child_name}<div class="error">{$errors.child_name}</div>{/if}
+					<label>ФИО&nbsp;*</label>
+					{$form->render('child_name')}				
+				</div>
+				<div class="row">
+					{if $errors.child_inn}<div class="error">{$errors.child_inn}</div>{/if}					
+					<label>ИНН (при наличии)</label>
+					{$form->render('child_inn')}				
+				</div>				
+				<div class="row">
+					{if $errors.child_birth_date}<div class="error">{$errors.child_birth_date}</div>{/if}
+					<label>Дата рождения&nbsp;*</label>
 					{$form->render('child_birth_date')}				
 				</div>
-				
-				
-				<h2 class="separated">Информация о родителях (на кого оформляется вычет)</h2>
-				<div class="full_width">
-					{if $errors.parent_name}<div class="error parents_name">{$errors.parent_name}</div>{/if}
-					<label>ФИО *</label>
-					{$form->render('parent_name')}				
+				<div class="row">
+					{if $errors.child_document_type}<div class="error">{$errors.child_document_type}</div>{/if}
+					<label>Дoкумент&nbsp;*</label>
+					{$form->render('child_document_type')}				
 				</div>
-				{if $errors.parent_birth_date}<div class="error age">{$errors.parent_birth_date}</div>{/if}
-				<div class="row">			
-					<label>Дата рождения</label>
-					{$form->render('parent_birth_date')}				
+				<div class="row">
+					{if $errors.child_document_series}<div class="error">{$errors.child_document_series}</div>{/if}
+					<label>Серия документа&nbsp;*</label>
+					{$form->render('child_document_series')}  				
 				</div>
+				<div class="row">
+					{if $errors.child_document_number}<div class="error">{$errors.child_document_number}</div>{/if}
+					<label>Номер документа&nbsp;*</label>
+					{$form->render('child_document_number')}  				
+				</div>
+				<div class="row">
+					{if $errors.child_document_issue_date}<div class="error">{$errors.child_document_issue_date}</div>{/if}
+					<label>Дата выдачи документа&nbsp;*</label>
+					{$form->render('child_document_issue_date')}  				
+				</div>
+				<div class="row child_document_issued_by hidden">
+					{if $errors.child_document_issued_by}<div class="error">{$errors.child_document_issued_by}</div>{/if}
+					<label>Код подразделения&nbsp;*</label>
+					{$form->render('child_document_issued_by')}  				
+				</div>				
+				
 				
 				<h2 class="separated">Период и стоимость обучения</h2>
 				
@@ -72,7 +133,7 @@
 						<div class="user-inputs">
 						
 						</div>
-						<a href="#" class="add-period add-item">Добавить период обучения</a>
+						{* <a href="#" class="add-period add-item">Добавить период обучения</a> *}
 					</div>
 				</div>
 	
@@ -94,7 +155,29 @@
 				</div>
 				
 				
-				
+				<h2 class="separated">Получение справки и согласие на обработку данных</h2>
+
+				<div class="row">
+					{if $errors.delivery_type}<div class="error">{$errors.delivery_type}</div>{/if}
+					<label>Получить справку&nbsp;*</label>
+					{$form->render('delivery_type')}  				
+				</div>
+				<div class="row delivery_email hidden">
+					{if $errors.delivery_email}<div class="error">{$errors.delivery_email}</div>{/if}
+					<label>Email для получения справки&nbsp;*</label>
+					{$form->render('delivery_email')}  				
+				</div>
+				{if $errors.data_process_confirmation}<div class="error">{$errors.data_process_confirmation}</div>{/if}
+				<div class="row">					
+					<label>&nbsp;</label>
+					{$form->render('data_process_confirmation')} <span class="confirmation-label">Подписывая настоящее заявление, я даю согласие на обработку персональных данных и подтверждаю, что все персональные данные третьих лиц, указанные мною в данном заявлении, я предоставляю с их добровольного согласия</span>
+				</div>
+				{if $errors.data_validity_confirmation}<div class="error">{$errors.data_validity_confirmation}</div>{/if}
+				<div class="row">					
+					<label>&nbsp;</label>
+					{$form->render('data_validity_confirmation')} <span class="confirmation-label">Достоверность сведений, указанных в настоящем заявлении подтверждаю</span>
+				</div>
+
 				
 				
 				<div class="comment">* - обязательное для заполнения поле</div>
@@ -104,7 +187,9 @@
 				{include file=$warning_box_template}
 						
 			</form>		
+
 			
+
 			
 							
 			

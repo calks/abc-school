@@ -92,6 +92,42 @@
 			event.preventDefault();			
 			render_file_row();			
 		});
+		
+
+		var delivery_type_select = $('[name=delivery_type]');
+		var child_document_type_select = $('[name=child_document_type]');
+
+		
+		function set_dependant_fields_visibility() {
+			var delivery_type = delivery_type_select.val();
+			var child_document_type = child_document_type_select.val();
+			var child_document_issued_by_row = $('.row.child_document_issued_by');
+			var delivery_email_row = $('.row.delivery_email');
+			
+			if (delivery_type == 'by_email') {
+				delivery_email_row.removeClass('hidden');
+			}
+			else {
+				delivery_email_row.addClass('hidden');
+			}
+			
+			if (child_document_type == 'passport') {
+				child_document_issued_by_row.removeClass('hidden');
+			}
+			else {
+				child_document_issued_by_row.addClass('hidden');
+			}
+		}
+		
+		set_dependant_fields_visibility();
+		
+		delivery_type_select.change(function() {
+			set_dependant_fields_visibility();	
+		});
+		child_document_type_select.change(function() {
+			set_dependant_fields_visibility();	
+		});
+		
 
 		
 		
